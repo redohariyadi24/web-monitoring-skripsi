@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin:0; padding:0;
+    box-sizing: border-box;
+    outline: none; border:none;
+    text-decoration: none;
+}
+
+.container{
+    background-color:#001958;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.form-container{
+    background-color: #d9d9d9;
+    width: max-content;
+    padding: 30px;
+    border-radius: 20px;
+}
+.form-container h2 {
+    text-align: center; 
+    font-size: 30px;
+    /* padding: 0 0 5px 0; */
+}
+
+.form-container form .login-form{
+    background-color: #ececec;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1em 1.5em ;
+    text-align: center;
+    border-radius: 0 0 1em 1em;
+}
+
+.form-container form .login-form input{
+    padding: 1em;
+    margin: 3px;
+}
+/* 
+.form-container form .login-form h4:nth-child(3){
+    padding: 5px 0 0 0;
+} */
+
+input{
+    border-radius: 5px;
+    height: 2rem;
+    width: 250px;
+}
+
+.form-container form .login-form .form-btn{
+    background: #001958;
+    font-weight: bold;
+    font-size: 15px;
+    color:#ecf1ff;
+    cursor: pointer;
+    margin: 15px 0 10px 0;
+    width: max-content;
+    height: max-content;
+    padding: 0.5em 1.5em;
+    border-radius: 10px;
+}
+
+.form-container form .form-btn:hover{
+    background: #ecf1ff;
+    color:#001958;
+}
