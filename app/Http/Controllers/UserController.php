@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    function index(){
-        echo "Hallo user ". Auth::user()->name .". <br>";
+    function index()
+    {
+        echo "Hallo user " . Auth::user()->name . ". <br>";
         echo "<a href='logout'>Logout</a>";
     }
     function mahasiswa()
@@ -25,6 +26,7 @@ class UserController extends Controller
     function admin()
     {
         $user = Auth::user();
-        return view('admin.index', ['user' => $user]);
+        return view('admin.index',['user' => $user])
+            ->with('layout', 'layout.admin-layout');
     }
 }
