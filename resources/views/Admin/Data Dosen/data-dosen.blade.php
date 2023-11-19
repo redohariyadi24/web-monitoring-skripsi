@@ -21,13 +21,13 @@
                 <div data-i18n="Account Settings">Data</div>
             </a>
             <ul class="menu-sub ">
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a href="{{ route('data-mahasiswa.index') }}" class="menu-link">
                         <div data-i18n="Account">Data Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item active">
+                    <a href="{{ route('data-dosen.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Data Dosen</div>
                     </a>
                 </li>
@@ -61,7 +61,7 @@
                 Skripsi</span></li>
         <!-- Cards -->
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{ route('progres-skripsi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Progres Skripsi</div>
             </a>
@@ -90,7 +90,7 @@
                             </label>
                     </div> --}}
                     <button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
-                        type="button" onclick="window.location.href='{{ route('data-mahasiswa.tambah') }}'">
+                        type="button" onclick="window.location.href='{{ route('data-dosen.tambah') }}'"> 
                         <span>
                             <i class="bx bx-plus me-sm-1"></i>
                             <span class="d-none d-sm-inline-block">Tambah Data</span>
@@ -103,63 +103,46 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>no</th>
-                        <th>NPM</th>
-                        <th>Mahasiswa</th>
-                        <th>Semester</th>
-                        <th>Judul Skripsi</th>
-                        <th>Dosen Pembimbing</th>
+                        <th>No</th>
+                        <th>NIP</th>
+                        <th>Dosen</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($mahasiswas as $mahasiswa)
+                    @foreach ($dosens as $dosen)
                         <tr>
-                            <td>{{ $mahasiswa->id }}</td>
-                            <td><i class="fab"></i> <strong>{{ $mahasiswa->npm }}</strong></td>
+                            <td>{{ $dosen->id }}</td>
+                            <td><i class="fab"></i> <strong>{{ $dosen->nip }}</strong></td>
                             <td class="" style="">
                                 <div class="d-flex justify-content-start align-items-center user-name">
                                     <div class="avatar-wrapper">
                                         <div class="avatar me-2">
-                                            @if ($mahasiswa->foto)
+                                            @if ($dosen->foto)
                                                 <!-- Jika ada foto, tampilkan foto -->
                                                 <div class="avatar-popup">
-                                                    @if ($mahasiswa->foto)
+                                                    @if ($dosen->foto)
                                                         <img class=""
-                                                            src="{{ asset('Foto Mahasiswa') . '/' . $mahasiswa->foto }}"
-                                                            alt="{{ $mahasiswa->nama }} Avatar"
+                                                            src="{{ asset('Foto Dosen') . '/' . $dosen->foto }}"
+                                                            alt="{{ $dosen->nama }} Avatar"
                                                             style="min-width: 100px; min-height: 100px;">
                                                     @endif
                                                 </div>
                                                 <img class="avatar-initial rounded-circle bg-label-dark"
-                                                    src="{{ url('Foto Mahasiswa') . '/' . $mahasiswa->foto }}" />
+                                                    src="{{ url('Foto Dosen') . '/' . $dosen->foto }}" />
                                             @else
                                                 <!-- Jika tidak ada foto, tampilkan inisial -->
                                                 <span class="avatar-initial rounded-circle bg-label-dark">
-                                                    {{ $mahasiswa['initials'] }}
+                                                    {{ $dosen['initials'] }}
                                                 </span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <span class="emp_name text-truncate">{{ $mahasiswa->nama }}</span>
-                                        <small class="emp_post text-truncate text-muted">{{ $mahasiswa->email }}</small>
+                                        <span class="emp_name text-truncate">{{ $dosen->nama }}</span>
+                                        <small class="emp_post text-truncate text-muted">{{ $dosen->email }}</small>
                                     </div>
                                 </div>
-                            </td>
-                            <td>Semester {{ $mahasiswa->semester }}</td>
-                            <td>Website Monitoring Skripsi</td>
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-sm pull-up" title="Jeni Blekpink S.kom M.Eng">
-                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-sm pull-up" title="Drs. Rudi Tabuty S.kom M.Eng">
-                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                </ul>
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -169,11 +152,11 @@
                                     </button>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item"
-                                            href="{{ route('data-mahasiswa.edit', $mahasiswa->id) }}"><i
+                                            href="{{ route('data-dosen.edit', $dosen->id) }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
                                         <form id="formHapusMahasiswa"
-                                            action="{{ route('data-mahasiswa.hapus', $mahasiswa->id) }}" method="POST"
+                                            action="{{ route('data-dosen.hapus', $dosen->id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')

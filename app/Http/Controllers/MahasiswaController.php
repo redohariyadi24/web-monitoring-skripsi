@@ -10,14 +10,9 @@ class MahasiswaController extends Controller
 {
     public function index()
     {
-        $mahasiswas = Mahasiswa::all();
-        $inisialmahasiswas = $mahasiswas->map(function ($data) {
-            $data['initials'] = $this->generateInitials($data->nama);
-            return $data;
-        });
+        $mahasiswas = Mahasiswa::with('skripsi.dosen1', 'skripsi.dosen2')->get();
 
-
-        return view('admin.Data Mahasiswa.data-mahasiswa', ['mahasiswas' => $inisialmahasiswas]);
+        return view('admin.Data Mahasiswa.data-mahasiswa', ['mahasiswas' => $mahasiswas]);
     }
 
     private function generateInitials($fullName)
@@ -76,7 +71,7 @@ class MahasiswaController extends Controller
             'nama' => 'required',
             'email' => 'required|email',
             'semester' => 'required|numeric|between:5,14',
-            
+
         ]);
 
         if ($request->hasFile('foto')) {
@@ -96,8 +91,18 @@ class MahasiswaController extends Controller
             $data['foto'] = $foto_nama;
         }
 
+        if ($request->has('hapus_foto') && $mahasiswa->foto) {
+            // Hapus avatar dari penyimpanan fisik
+            if (file_exists(public_path('Foto Mahasiswa') . '/' . $mahasiswa->foto)) {
+                unlink(public_path('Foto Mahasiswa') . '/' . $mahasiswa->foto);
+            }
+
+            // Hapus referensi avatar dari database
+            $data['foto'] = null;
+        }
+
         $mahasiswa->update($data);
-        
+
         return redirect(route('data-mahasiswa.index'))->with('success', 'Data Mahasiswa Telah Berhasil di Update');
     }
 

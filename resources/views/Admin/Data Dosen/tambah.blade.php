@@ -1,5 +1,7 @@
 @extends('layout.layout-admin')
 
+@section('title', 'Edit Data Dosen')
+
 @section('menu-sidebar')
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
@@ -19,13 +21,13 @@
                 <div data-i18n="Account Settings">Data</div>
             </a>
             <ul class="menu-sub ">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="{{ route('data-mahasiswa.index') }}" class="menu-link">
                         <div data-i18n="Account">Data Mahasiswa</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="" class="menu-link">
+                <li class="menu-item active">
+                    <a href="{{ route('data-dosen.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Data Dosen</div>
                     </a>
                 </li>
@@ -59,7 +61,7 @@
                 Skripsi</span></li>
         <!-- Cards -->
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{ route('progres-skripsi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Progres Skripsi</div>
             </a>
@@ -75,23 +77,23 @@
 @endsection
 
 @section('main')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Data Mahasiswa/</span> Tambah Data Mahasiswa</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Data Dosen/</span> Tambah Data Dosen</h4>
     <!-- Basic Layout -->
 
     <div class="col-xl mx-auto" style="max-width: 700px">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Form Pengisian Data Mahasiswa</h5>
+                <h5 class="mb-0">Form Pengisian Data Dosen</h5>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route('data-mahasiswa.simpan') }}" enctype="multipart/form-data"> 
+                <form method="post" action="{{ route('data-dosen.simpan') }}" enctype="multipart/form-data"> 
                     @csrf
                     @method('post')
                     <div class="mb-3">
                         <div class="form-floating">
-                            <input name="npm" type="text" class="form-control" id="floatingInput" placeholder="G1A021034"
-                                aria-describedby="floatingInputHelp" style="text-transform: uppercase;" maxlength="9"/>
-                            <label for="floatingInput">NPM</label>
+                            <input name="nip" type="text" class="form-control" id="floatingInput" placeholder="19xxxxxxxxxxx"
+                                aria-describedby="floatingInputHelp" style="text-transform: uppercase;"/>
+                            <label for="floatingInput">NIP</label>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -109,17 +111,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <div class="form-floating">
-                            <input name="semester" type="number" class="form-control" id="floatingInput" placeholder="5"
-                                aria-describedby="floatingInputHelp" min="5" max="14" />
-                            <label for="floatingInput">Semester</label>
-                            <div id="floatingInputHelp" class="form-text">
-                                * Minimal Semester 5 dan Maksimal 14
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="formFile" class="form-label">Foto Mahasiswa</label>
+                        <label for="formFile" class="form-label">Foto Dosen</label>
                         <input name="foto" class="form-control" type="file" id="formFile" accept=".jpg, .jpeg, .png" />
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>

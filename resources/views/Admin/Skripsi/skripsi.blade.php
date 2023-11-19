@@ -1,6 +1,6 @@
 @extends('layout.layout-admin')
 
-@section('title', 'Data Mahasiswa')
+@section('title', 'Progres Skripsi')
 
 @section('menu-sidebar')
     <ul class="menu-inner py-1">
@@ -15,13 +15,13 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Manajemen Data</span>
         </li>
-        <li class="menu-item active open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
                 <div data-i18n="Account Settings">Data</div>
             </a>
             <ul class="menu-sub ">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="{{ route('data-mahasiswa.index') }}" class="menu-link">
                         <div data-i18n="Account">Data Mahasiswa</div>
                     </a>
@@ -60,7 +60,7 @@
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen
                 Skripsi</span></li>
         <!-- Cards -->
-        <li class="menu-item">
+        <li class="menu-item active">
             <a href="{{ route('progres-skripsi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Progres Skripsi</div>
@@ -90,7 +90,7 @@
                             </label>
                     </div> --}}
                     <button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
-                        type="button" onclick="window.location.href='{{ route('data-mahasiswa.tambah') }}'">
+                        type="button" onclick="window.location.href='{{ route('progres-skripsi.tambah') }}' ">
                         <span>
                             <i class="bx bx-plus me-sm-1"></i>
                             <span class="d-none d-sm-inline-block">Tambah Data</span>
@@ -103,99 +103,79 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>no</th>
-                        <th>NPM</th>
-                        <th>Mahasiswa</th>
-                        <th>Semester</th>
+                        <th>No</th>
+                        <th>Nama Mahasiswa</th>
                         <th>Judul Skripsi</th>
+                        <th>Progres</th>
                         <th>Dosen Pembimbing</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($mahasiswas as $mahasiswa)
+                    @foreach ($skripsis as $skripsi)
                         <tr>
-                            <td>{{ $mahasiswa->id }}</td>
-                            <td><i class="fab"></i> <strong>{{ $mahasiswa->npm }}</strong></td>
+                            <td>{{ $skripsi->id }}</td>
                             <td class="" style="">
                                 <div class="d-flex justify-content-start align-items-center user-name">
                                     <div class="avatar-wrapper">
                                         <div class="avatar me-2">
-                                            @if ($mahasiswa->foto)
+                                            @if ($skripsi->mahasiswa->foto)
                                                 <!-- Jika ada foto, tampilkan foto -->
                                                 <div class="avatar-popup">
-                                                    @if ($mahasiswa->foto)
+                                                    @if ($skripsi->mahasiswa->foto)
                                                         <img class=""
-                                                            src="{{ asset('Foto Mahasiswa') . '/' . $mahasiswa->foto }}"
-                                                            alt="{{ $mahasiswa->nama }} Avatar"
+                                                            src="{{ asset('Foto Mahasiswa') . '/' . $skripsi->mahasiswa->foto }}"
+                                                            alt="{{ $skripsi->mahasiswa->nama }} Avatar"
                                                             style="min-width: 100px; min-height: 100px;">
                                                     @endif
                                                 </div>
                                                 <img class="avatar-initial rounded-circle bg-label-dark"
-                                                    src="{{ url('Foto Mahasiswa') . '/' . $mahasiswa->foto }}" />
+                                                    src="{{ url('Foto Mahasiswa') . '/' . $skripsi->mahasiswa->foto }}" />
                                             @else
                                                 <!-- Jika tidak ada foto, tampilkan inisial -->
                                                 <span class="avatar-initial rounded-circle bg-label-dark">
-                                                    {{ generateInitials($mahasiswa->nama) }}
+                                                    {{ generateInitials($skripsi->mahasiswa->nama) }}
                                                 </span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="d-flex flex-column">
-                                        <span class="emp_name text-truncate">{{ $mahasiswa->nama }}</span>
-                                        <small class="emp_post text-truncate text-muted">{{ $mahasiswa->email }}</small>
+                                        <strong class="mb-0">{{ $skripsi->mahasiswa->npm }}</strong>
+                                        <span class="emp_name text-truncate">{{ $skripsi->mahasiswa->nama }}</span>
                                     </div>
                                 </div>
                             </td>
-                            <td>Semester {{ $mahasiswa->semester }}</td>
+                            <td>{{ $skripsi->judul }}</td>
+                            <td>{{ $skripsi->progres }}%</td>
                             <td>
-                                @if ($mahasiswa->skripsi)
-                                    <div><strong>{{ $mahasiswa->skripsi->judul }}</strong></div>
-                                @else
-                                    <div class="text-muted">
-                                        <em>Belum ada judul skripsi</em>
-                                    </div>
-                                @endif
-                            </td>
-                            <td>
-                                @if ($mahasiswa->skripsi)
-                                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                        @if ($mahasiswa->skripsi->dosen1)
-                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                                class="avatar avatar-sm pull-up"
-                                                title="{{ $mahasiswa->skripsi->dosen1->nama }}">
-                                                @if ($mahasiswa->skripsi->dosen1->foto)
-                                                    <img src="{{ url('Foto Dosen') . '/' . $mahasiswa->skripsi->dosen1->foto }}"
-                                                        alt="Avatar" class="rounded-circle" />
-                                                @else
-                                                    <span class="avatar-initial rounded-circle bg-label-dark">
-                                                        {{ generateInitials($mahasiswa->skripsi->dosen1->nama) }}
-                                                    </span>
-                                                @endif
-                                            </li>
-                                        @endif
-
-                                        {{-- Display Dosen 2 --}}
-                                        @if ($mahasiswa->skripsi->dosen2)
-                                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                data-bs-placement="top" class="avatar avatar-sm pull-up"
-                                                title="{{ $mahasiswa->skripsi->dosen2->nama }}">
-                                                @if ($mahasiswa->skripsi->dosen2->foto)
-                                                    <img src="{{ url('Foto Dosen') . '/' . $mahasiswa->skripsi->dosen2->foto }}"
-                                                        alt="Avatar" class="rounded-circle" />
-                                                @else
-                                                    <span class="avatar-initial rounded-circle bg-label-dark">
-                                                        {{ generateInitials($mahasiswa->skripsi->dosen2->nama) }}
-                                                    </span>
-                                                @endif
-                                            </li>
-                                        @endif
-                                    </ul>
-                                @else
-                                    <div class="text-muted">
-                                        <em>Belum ada Dosen Pembimbing</em>
-                                    </div>
-                                @endif
+                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                    @if ($skripsi->dosen1)
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                            class="avatar avatar-sm pull-up" title="{{ $skripsi->dosen1->nama }}">
+                                            @if ($skripsi->dosen1->foto)
+                                                <img src="{{ url('Foto Dosen') . '/' . $skripsi->dosen1->foto }}"
+                                                    alt="Avatar" class="rounded-circle" />
+                                            @else
+                                                <span class="avatar-initial rounded-circle bg-label-dark">
+                                                    {{ generateInitials($skripsi->dosen1->nama) }}
+                                                </span>
+                                            @endif
+                                        </li>
+                                    @endif
+                                    @if ($skripsi->dosen2)
+                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
+                                            class="avatar avatar-sm pull-up" title="{{ $skripsi->dosen2->nama }}">
+                                            @if ($skripsi->dosen2->foto)
+                                                <img src="{{ url('Foto Dosen') . '/' . $skripsi->dosen2->foto }}"
+                                                    alt="Avatar" class="rounded-circle" />
+                                            @else
+                                                <span class="avatar-initial rounded-circle bg-label-dark">
+                                                    {{ generateInitials($skripsi->dosen2->nama) }}
+                                                </span>
+                                            @endif
+                                        </li>
+                                    @endif
+                                </ul>
                             </td>
                             <td>
                                 <div class="dropdown">
@@ -204,12 +184,10 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                            href="{{ route('data-mahasiswa.edit', $mahasiswa->id) }}"><i
+                                        <a class="dropdown-item" href="{{ route('progres-skripsi.edit', $skripsi->id) }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <form id="formHapusMahasiswa"
-                                            action="{{ route('data-mahasiswa.hapus', $mahasiswa->id) }}" method="POST"
+                                        <form id="formHapusMahasiswa" action="{{ route('progres-skripsi.hapus', $skripsi->id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')
@@ -228,12 +206,4 @@
 
         </div>
     </div>
-@endsection
-
-@section('js')
-    <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
-@endsection
-
-@section('script')
-
 @endsection

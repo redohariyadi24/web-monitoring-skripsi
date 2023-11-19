@@ -27,7 +27,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="{{ route('data-dosen.index') }}" class="menu-link">
                         <div data-i18n="Notifications">Data Dosen</div>
                     </a>
                 </li>
@@ -61,7 +61,7 @@
                 Skripsi</span></li>
         <!-- Cards -->
         <li class="menu-item">
-            <a href="cards-basic.html" class="menu-link">
+            <a href="{{ route('progres-skripsi.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
                 <div data-i18n="Basic">Progres Skripsi</div>
             </a>
