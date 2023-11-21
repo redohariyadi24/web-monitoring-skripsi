@@ -32,4 +32,9 @@ class Skripsi extends Model
     {
         return $this->belongsTo(Dosen::class, 'dosen2_id');
     }
+
+    public function jadwal()
+    {
+        return $this->hasOne(Jadwal::class);
+    }
 }

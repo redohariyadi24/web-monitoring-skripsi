@@ -54,7 +54,7 @@
                     <a href="index.html" class="app-brand-link">
                         {{-- Logo --}}
                         <span class="app-brand-logo demo">
-                            
+
                         </span>
                         {{-- Nama Web --}}
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">Web Skripsi</span>
@@ -109,7 +109,77 @@
                 <!--/ User -->
                 <div class="menu-inner-shadow"></div>
                 {{-- Menu Sidebar --}}
-                @yield('menu-sidebar')
+                <ul class="menu-inner py-1">
+                    <!-- Dashboard -->
+                    <li class="menu-item">
+                        <a href="/beranda" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Beranda</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Manajemen Data</span>
+                    </li>
+                    <li class="menu-item {{ request()->is('data-mahasiswa') || request()->is('data-dosen') ? 'menu-item active open' : 'menu-item' }}">
+                        <a href="#" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Data</div>
+                        </a>
+                        <ul class="menu-sub {{ request()->is('data-mahasiswa') ? 'active' : ''}}">
+                            <li class="menu-item">
+                                <a href="/data-mahasiswa" class="menu-link">
+                                    <div data-i18n="Account">Data Mahasiswa</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="/data-dosen" class="menu-link">
+                                    <div data-i18n="Notifications">Data Dosen</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item ">
+                        <a href="#" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Authentications">Akun</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="#" class="menu-link" target="_blank">
+                                    <div data-i18n="Basic">Akun Mahasiswa</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#" class="menu-link" target="_blank">
+                                    <div data-i18n="Basic">Akun Dosen</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="#" class="menu-link" target="_blank">
+                                    <div data-i18n="Basic">Akun Admin</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- Components -->
+                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen
+                            Skripsi</span></li>
+                    <!-- Cards -->
+                    <li class="menu-item">
+                        <a href="/progres-skripsi" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-pie-chart"></i>
+                            <div data-i18n="Basic">Progres Skripsi</div>
+                        </a>
+                    </li>
+                    <!-- User interface -->
+                    <li class="menu-item">
+                        <a href="/jadwal-sidang" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-calendar"></i>
+                            <div data-i18n="User interface">Jadwal Sidang</div>
+                        </a>
+                    </li>
+                </ul>
             </aside>
             <!-- / Sidebar -->
             <!-- Layout container -->
@@ -171,12 +241,60 @@
         <!-- Main JS -->
         <script src="{{ asset('assets/js/main.js') }}"></script>
 
+
         <!-- Page JS -->
         <script src="{{ asset('assets/js/dashboards-analytics.js') }}"></script>
         <script src="{{ asset('assets/js/ui-toasts.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
+
+        <script>
+            // Get the current URL path
+            var path = window.location.pathname;
+
+            // Find the corresponding menu item and make it active
+            $('.menu-item a').each(function() {
+                var href = $(this).attr('href');
+                if (path === href) {
+                    $(this).closest('.menu-item').addClass('active');
+                }
+            });
+
+            // Find the corresponding submenu item and make its parent menu item active and open
+            $('.menu-sub a').each(function() {
+                var href = $(this).attr('href');
+                if (path === href) {
+                    $(this).closest('.menu-item').addClass('active open');
+                    $(this).closest('.menu-sub').addClass('active');
+                }
+            });
+        </script>
+
+
+
+        {{-- <script>
+            // Get the current URL path
+            var path = window.location.pathname;
+
+            // Find the corresponding menu item and make it active
+            $('.menu-item a').each(function() {
+                var href = $(this).attr('href');
+                if (path === href) {
+                    $(this).closest('.menu-item').addClass('active');
+                }
+            });
+
+            // Find the corresponding submenu item and make its parent menu item active
+            $('.menu-sub a').each(function() {
+                var href = $(this).attr('href');
+                if (path === href) {
+                    $(this).closest('.menu-item').addClass('active');
+                }
+            });
+        </script> --}}
 
         @yield('scripts')
-        
+
         <!-- Place this tag in your head or just before your close body tag. -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
 </body>

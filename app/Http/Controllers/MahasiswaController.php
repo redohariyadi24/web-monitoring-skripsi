@@ -14,19 +14,7 @@ class MahasiswaController extends Controller
 
         return view('admin.Data Mahasiswa.data-mahasiswa', ['mahasiswas' => $mahasiswas]);
     }
-
-    private function generateInitials($fullName)
-    {
-        $words = explode(' ', $fullName);
-        $initials = '';
-
-        foreach ($words as $word) {
-            $initials .= strtoupper(substr($word, 0, 1));
-        }
-
-        return $initials;
-    }
-
+    
     public function tambah()
     {
         return view('admin.Data Mahasiswa.tambah');

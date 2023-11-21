@@ -19,14 +19,14 @@ class SkripsiSeeder extends Seeder
                 'dosen1_id' => 1,
                 'dosen2_id' => 2,
                 'judul' => 'Sistem Informasi Penyewaan Lapangan Bencolen Mall',
-                'progres' => 0
+                'progres' => 100
             ],
             [
                 'mahasiswa_id' => 3,
                 'dosen1_id' => 2,
                 'dosen2_id' => 3,
                 'judul' => 'Sistem Informasi Pengelolaan Kost-kostan',
-                'progres' => 20
+                'progres' => 100
             ],
             [
                 'mahasiswa_id' => 4,

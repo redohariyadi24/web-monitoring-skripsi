@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SkripsiController;
@@ -38,7 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/mahasiswa', [UserController::class, 'mahasiswa'])->middleware('userAkses:mahasiswa');
     Route::get('/user/dosen', [UserController::class, 'dosen'])->middleware('userAkses:dosen');
 
-    Route::get('/user/admin', [UserController::class, 'admin'])->middleware('userAkses:admin')->name('dashboard-admin');
+    Route::get('/beranda', [UserController::class, 'admin'])->middleware('userAkses:admin')->name('dashboard-admin');
 
     // CRUD Data Mahasiswa
     Route::get('/data-mahasiswa', [MahasiswaController::class, 'index'])->middleware('userAkses:admin')
@@ -81,6 +82,20 @@ Route::middleware(['auth'])->group(function () {
     ->name('progres-skripsi.update');
     Route::delete('/progres-skripsi/{skripsi}/hapus', [SkripsiController::class, 'hapus'])->middleware('userAkses:admin')
     ->name('progres-skripsi.hapus');
+
+    //CRUD Jadwal Sidang
+    Route::get('/jadwal-sidang', [JadwalController::class, 'index'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.index');
+    Route::get('/jadwal-sidang/tambah', [JadwalController::class, 'tambah'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.tambah');
+    Route::post('/jadwal-sidang', [JadwalController::class, 'simpan'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.simpan');
+    Route::get('/jadwal-sidang/{jadwal}/edit', [JadwalController::class, 'edit'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.edit');
+    Route::put('/jadwal-sidang/{jadwal}/update', [JadwalController::class, 'update'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.update');
+    Route::delete('/jadwal-sidang/{jadwal}/hapus', [JadwalController::class, 'hapus'])->middleware('userAkses:admin')
+    ->name('jadwal-sidang.hapus');
 });
 
 Route::get('/layout', function () {
