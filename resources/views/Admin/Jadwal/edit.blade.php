@@ -8,12 +8,6 @@
                 <h5 class="mb-0">Form Edit Jadwal Sidang</h5>
             </div>
             <div class="card-body">
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <form method="post" action="{{ route('jadwal-sidang.update', ['jadwal' => $jadwal->id]) }}">
                     @csrf
                     @method('put')

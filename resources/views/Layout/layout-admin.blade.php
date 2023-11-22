@@ -124,9 +124,9 @@
                     <li class="menu-item {{ request()->is('data-mahasiswa') || request()->is('data-dosen') ? 'menu-item active open' : 'menu-item' }}">
                         <a href="#" class="menu-link menu-toggle">
                             <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="Account Settings">Data</div>
+                            <div data-i18n="">Data</div>
                         </a>
-                        <ul class="menu-sub {{ request()->is('data-mahasiswa') ? 'active' : ''}}">
+                        <ul class="menu-sub ">
                             <li class="menu-item">
                                 <a href="/data-mahasiswa" class="menu-link">
                                     <div data-i18n="Account">Data Mahasiswa</div>
@@ -139,25 +139,25 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="menu-item ">
+                    <li class="menu-item {{ request()->is('akun/mahasiswa', 'akun/dosen', 'akun/admin') ? 'menu-item active open' : 'menu-item' }}">
                         <a href="#" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-user"></i>
-                            <div data-i18n="Authentications">Akun</div>
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="">Akun</div>
                         </a>
-                        <ul class="menu-sub">
+                        <ul class="menu-sub ">
                             <li class="menu-item">
-                                <a href="#" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Akun Mahasiswa</div>
+                                <a href="/akun/mahasiswa" class="menu-link">
+                                    <div data-i18n="Account">Akun Mahasiswa</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="#" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Akun Dosen</div>
+                                <a href="/akun/dosen" class="menu-link">
+                                    <div data-i18n="Notifications">Akun Dosen</div>
                                 </a>
                             </li>
                             <li class="menu-item">
-                                <a href="#" class="menu-link" target="_blank">
-                                    <div data-i18n="Basic">Akun Admin</div>
+                                <a href="/akun/admin" class="menu-link">
+                                    <div data-i18n="Notifications">Akun Admin</div>
                                 </a>
                             </li>
                         </ul>

@@ -6,7 +6,7 @@
     <div class="card">
         <div class="card-header d-flex flex-column flex-md-row">
             <div class="head-label text">
-                <h4 class="card-title mb-0">Data Mahasiswa</h4>
+                <h4 class="card-title mb-0">Data Dosen</h4>
             </div>
             <div class="dt-action-buttons text-end pt-3 pt-md-0 ms-md-auto">
                 <div class="dt-buttons">

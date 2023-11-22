@@ -40,7 +40,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Keterangan</label>
-                        <textarea name="keterangan" class="form-control" rows="3"></textarea>
+                        <textarea name="keterangan" class="form-control" rows="3">Tempat: </textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
