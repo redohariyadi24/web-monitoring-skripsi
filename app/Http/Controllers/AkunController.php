@@ -133,19 +133,10 @@ class AkunController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users,username,' . $id,
-            'password' => 'nullable|min:8',
             'role' => 'required|in:mahasiswa',
         ]);
 
         dd($data);
-
-        // Hash password jika disediakan
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            // Jika password tidak disediakan, hapus kunci 'password' dari array
-            unset($data['password']);
-        }
 
         // Update user dengan data yang valid
         $user->update($data);

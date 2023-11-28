@@ -37,10 +37,18 @@ Route::get('/home', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
     Route::get('/user', [UserController::class, 'index']);
-    Route::get('/user/mahasiswa', [UserController::class, 'mahasiswa'])->middleware('userAkses:mahasiswa');
-    Route::get('/user/dosen', [UserController::class, 'dosen'])->middleware('userAkses:dosen');
 
-    Route::get('/beranda', [UserController::class, 'admin'])->middleware('userAkses:admin')->name('dashboard-admin');
+
+    //Mahasiswa
+    Route::get('/beranda', [UserController::class, 'mahasiswa'])->middleware('userAkses:mahasiswa')
+        ->name('dashboard-mahasiswa');
+
+    // Dosen
+    Route::get('/beranda-dosen', [UserController::class, 'dosen'])->middleware('userAkses:dosen')
+        ->name('dashboard-dosen');
+
+    //Admin
+    Route::get('/dashboard', [UserController::class, 'admin'])->middleware('userAkses:admin')->name('dashboard-admin');
 
     // CRUD Data Mahasiswa
     Route::get('/data-mahasiswa', [MahasiswaController::class, 'index'])->middleware('userAkses:admin')
@@ -120,31 +128,32 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/akun/mahasiswa', [AkunController::class, 'simpanMahasiswa'])->middleware('userAkses:admin')
         ->name('mahasiswa.simpan');
 
-    Route::prefix('akun')->middleware('userAkses:admin')->group(function () {
-        Route::prefix('admin')->group(function () {
-            Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->name('admin.edit');
-            Route::put('/update/{id}', [AkunController::class, 'updateAdmin'])->name('admin.update');
-        });
 
-        Route::prefix('dosen')->group(function () {
-            Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->name('dosen.edit');
-            Route::put('/update/{id}', [AkunController::class, 'updateDosen'])->name('dosen.update');
-        });
+    Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->middleware('userAkses:admin')
+    ->name('admin.edit');
+    Route::put('/update/{id}', [AkunController::class, 'updateAdmin'])->middleware('userAkses:admin')
+    ->name('admin.update');
 
-        Route::prefix('mahasiswa')->group(function () {
-            Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->name('mahasiswa.edit');
-            Route::put('/update/{id}', [AkunController::class, 'updateMahasiswa'])->name('mahasiswa.update');
-        });
-    });
+
+    Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->middleware('userAkses:admin')
+    ->name('dosen.edit');
+    Route::put('/update/{id}', [AkunController::class, 'updateDosen'])->middleware('userAkses:admin')
+    ->name('dosen.update');
+
+
+
+    Route::get('/{role}/edit/{id}', [AkunController::class, 'edit'])->middleware('userAkses:admin')
+    ->name('mahasiswa.edit');
+    Route::put('/update/{id}', [AkunController::class, 'updateMahasiswa'])->middleware('userAkses:admin')
+    ->name('mahasiswa.update');
+
 
     Route::delete('/akun/admin/hapus/{id}', [AkunController::class, 'hapusAdmin'])->middleware('userAkses:admin')
-    ->name('admin.hapus');
+        ->name('admin.hapus');
     Route::delete('/akun/dosen/hapus/{id}', [AkunController::class, 'hapusDosen'])->middleware('userAkses:admin')
         ->name('dosen.hapus');
     Route::delete('/akun/mahasiswa/hapus/{id}', [AkunController::class, 'hapusMahasiswa'])->middleware('userAkses:admin')
-    ->name('mahasiswa.hapus');
-
-
+        ->name('mahasiswa.hapus');
 });
 
 Route::get('/layout', function () {

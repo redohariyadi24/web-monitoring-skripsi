@@ -16,17 +16,36 @@ class UserController extends Controller
     function mahasiswa()
     {
         $user = Auth::user();
-        return view('mahasiswa.index', ['user' => $user]);
+        $mahasiswa = $user->mahasiswa; // Menggunakan relasi yang telah ditentukan
+
+        $skripsi = $mahasiswa->skripsi;
+
+        // Ambil data Dosen 1 dan Dosen 2
+        $dosen1 = $skripsi->dosen1; // Asumsi ada relasi di model Skripsi dengan nama 'dosen1'
+        $dosen2 = $skripsi->dosen2; // Asumsi ada relasi di model Skripsi dengan nama 'dosen2'
+
+        $jadwal = $skripsi->jadwal;
+        return view('mahasiswa.index', [
+            'user' => $user,
+            'mahasiswa' => $mahasiswa,
+            'skripsi' => $skripsi,
+            'dosen1' => $dosen1,
+            'dosen2' => $dosen2,
+            'jadwal' => $jadwal,
+        ])->with('layout', 'layout.layout-mahasiswa');
     }
     function dosen()
     {
         $user = Auth::user();
-        return view('dosen.index', ['user' => $user]);
+        $dosen = $user->dosen; // Menggunakan relasi yang telah ditentukan
+
+        return view('dosen.index', ['user' => $user, 'dosen' => $dosen])
+            ->with('layout', 'layout.layout-dosen');
     }
     function admin()
     {
         $user = Auth::user();
-        return view('admin.index',['user' => $user])
+        return view('admin.index', ['user' => $user])
             ->with('layout', 'layout.admin-layout');
     }
 }

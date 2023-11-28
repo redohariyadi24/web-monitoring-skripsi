@@ -23,5 +23,10 @@ class Mahasiswa extends Model
         return $this->hasOne(Skripsi::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'npm');
+    }
+
 
 }

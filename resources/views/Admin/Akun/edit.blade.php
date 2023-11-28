@@ -22,17 +22,6 @@
                         <input name="name" type="text" class="form-control" id="name" placeholder="Masukkan nama"
                             value="{{ old('name', $user->name) }}" />
                     </div>
-                    <div class="mb-3 form-password-toggle">
-                        <label class="form-label" for="password">Password</label>
-                        <div class="input-group input-group-merge">
-                            <input name="password" type="password" id="password" class="form-control"
-                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                aria-describedby="password" value="{{ old('password', $user->password) }}" />
-                            <span class="input-group-text cursor-pointer" onclick="togglePasswordVisibility()">
-                                <i class="bx bx-hide"></i>
-                            </span>
-                        </div>
-                    </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>

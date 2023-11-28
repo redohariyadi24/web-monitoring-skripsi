@@ -11,24 +11,8 @@ class DosenController extends Controller
     public function index()
     {
         $dosens = Dosen::all();
-        $inisialdosens = $dosens->map(function ($data) {
-            $data['initials'] = $this->generateInitials($data->nama);
-            return $data;
-        });
 
-        return view('admin.Data Dosen.data-dosen', ['dosens' => $inisialdosens]);
-    }
-
-    private function generateInitials($fullName)
-    {
-        $words = explode(' ', $fullName);
-        $initials = '';
-
-        foreach ($words as $word) {
-            $initials .= strtoupper(substr($word, 0, 1));
-        }
-
-        return $initials;
+        return view('admin.Data Dosen.data-dosen', ['dosens' => $dosens]);
     }
 
     public function tambah()

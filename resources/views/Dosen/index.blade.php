@@ -1,17 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.layout-dosen')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+@section('title', 'Beranda')
 
-<body>
-    <p>Hallo {{ $user->name }}<br>
-        Selamat datang di Halaman Dosen</p>
-    <a href='/logout'>Logout</a>
-</body>
+@section('main')
 
-</html>
+@endsection

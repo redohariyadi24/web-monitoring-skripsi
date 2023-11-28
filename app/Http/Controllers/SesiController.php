@@ -28,9 +28,9 @@ class SesiController extends Controller
 
         if (Auth::attempt($infoLogin)) {
             if (Auth::user()->role == 'mahasiswa') {
-                return redirect('user/mahasiswa');
+                return redirect(route('dashboard-mahasiswa'));
             } elseif (Auth::user()->role == 'dosen') {
-                return redirect('user/dosen');
+                return redirect(route('dashboard-dosen'));
             } elseif (Auth::user()->role == 'admin') {
                 return redirect(route('dashboard-admin'));
             }

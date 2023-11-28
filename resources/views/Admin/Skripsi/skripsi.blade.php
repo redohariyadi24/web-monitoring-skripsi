@@ -6,15 +6,18 @@
     <div class="card">
         <div class="card-header d-flex flex-column flex-md-row">
             <div class="head-label text">
-                <h4 class="card-title mb-0">Data Mahasiswa</h4>
+                <h4 class="card-title mb-0">Data Progres Skripsi Mahasiswa</h4>
             </div>
-            <div class="dt-action-buttons text-end pt-3 pt-md-0 ms-md-auto">
+            <div class="d-flex ms-auto me-3">
+                <div class="input-group">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Cari Skripsi...">
+                    </div>
+                </div>
+            </div>
+            <div class="dt-action-buttons text-end pt-3 pt-md-0">
                 <div class="dt-buttons">
-                    {{-- <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                        <label>Search:
-                            <input type="search" class="form-control" placeholder="" aria-controls="DataTables_Table_0">
-                            </label>
-                    </div> --}}
                     <button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
                         type="button" onclick="window.location.href='{{ route('progres-skripsi.tambah') }}' ">
                         <span>
@@ -25,6 +28,7 @@
                 </div>
             </div>
         </div>
+        <?php $no = 1; ?>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
                 <thead>
@@ -33,14 +37,14 @@
                         <th>Nama Mahasiswa</th>
                         <th>Judul Skripsi</th>
                         <th>Progres</th>
-                        <th>Dosen Pembimbing</th>
+                        <th>Pembimbing</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @foreach ($skripsis as $skripsi)
                         <tr>
-                            <td>{{ $skripsi->id }}</td>
+                            <td>{{ $no++ }}</td>
                             <td class="" style="">
                                 <div class="d-flex justify-content-start align-items-center user-name">
                                     <div class="avatar-wrapper">
@@ -72,7 +76,24 @@
                                 </div>
                             </td>
                             <td>{{ $skripsi->judul }}</td>
-                            <td>{{ $skripsi->progres }}%</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div div="" class="progress" style="height: 8px; min-width: 75px">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width:{{ $skripsi->progres }}%;
+                                            @if ($skripsi->progres == 0) background-color: #8592a3;
+                                            @elseif($skripsi->progres >= 1 && $skripsi->progres <= 50)
+                                                background-color: #ffab00;
+                                            @elseif($skripsi->progres >= 51 && $skripsi->progres <= 99)
+                                                background-color: #007bff;
+                                            @else
+                                                background-color: #71dd37; @endif"
+                                            aria-valuenow="{{ $skripsi->progres }}" aria-valuemin="0" aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <div class="text-body ms-3">{{ $skripsi->progres }}%</div>
+                                </div>
+                            </td>
                             <td>
                                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                                     @if ($skripsi->dosen1)
@@ -110,10 +131,12 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('progres-skripsi.edit', $skripsi->id) }}"><i
+                                        <a class="dropdown-item"
+                                            href="{{ route('progres-skripsi.edit', $skripsi->id) }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <form id="formHapusMahasiswa" action="{{ route('progres-skripsi.hapus', $skripsi->id) }}" method="POST"
+                                        <form id="formHapusMahasiswa"
+                                            action="{{ route('progres-skripsi.hapus', $skripsi->id) }}" method="POST"
                                             style="display: inline;">
                                             @csrf
                                             @method('DELETE')

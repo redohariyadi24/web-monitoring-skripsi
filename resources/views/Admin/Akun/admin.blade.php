@@ -8,7 +8,15 @@
             <div class="head-label text">
                 <h4 class="card-title mb-0">Data Mahasiswa</h4>
             </div>
-            <div class="dt-action-buttons text-end pt-3 pt-md-0 ms-md-auto">
+            <div class="d-flex ms-auto me-3">
+                <div class="input-group">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Cari Akun...">
+                    </div>
+                </div>
+            </div>
+            <div class="dt-action-buttons text-end pt-3 pt-md-0">
                 <div class="dt-buttons">
                     <button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
                         type="button" onclick="window.location.href='{{ route('admin.tambah') }}'">

@@ -25,4 +25,9 @@ class Dosen extends Model
     {
         return $this->hasMany(Skripsi::class, 'dosen2_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'nip', 'npm');
+    }
 }

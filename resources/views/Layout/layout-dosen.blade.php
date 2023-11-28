@@ -74,14 +74,21 @@
                         <div class="d-flex">
                             <div class="flex-shrink-0 me-3">
                                 <div class="avatar avatar-online">
-                                    <span class="avatar-initial rounded-circle bg-label-dark">
-                                        {{ generateInitials($user->name) }}
-                                    </span>
+                                    @if ($dosen->foto)
+                                        <!-- Jika ada foto, tampilkan foto -->
+                                        <img class="avatar-initial rounded-circle bg-label-dark"
+                                            src="{{ url('Foto Mahasiswa') . '/' . $dosen->foto }}" />
+                                    @else
+                                        <!-- Jika tidak ada foto, tampilkan inisial -->
+                                        <span class="avatar-initial rounded-circle bg-label-dark">
+                                            {{ generateInitials($dosen->nama) }}
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="flex-grow-1">
                                 <span class="fw-semibold d-block">{{ $user->name }}</span>
-                                <small class="text-muted">Admin</small>
+                                <small class="text-muted">{{ $dosen->nip }}</small>
                             </div>
                         </div>
                     </a>
@@ -114,74 +121,16 @@
                 {{-- Menu Sidebar --}}
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
-                    <li class="menu-item">
-                        <a href="/dashboard" class="menu-link">
+                    <li class="menu-item {{ Request::is('beranda-dosen') ? 'active' : '' }}">
+                        <a href="beranda-mahasiswa" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                            <div data-i18n="Analytics">Dashboard</div>
+                            <div data-i18n="Analytics">Beranda</div>
                         </a>
                     </li>
-
-                    <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Manajemen Data</span>
-                    </li>
-                    <li
-                        class="menu-item {{ request()->is('data-mahasiswa') || request()->is('data-dosen') ? 'menu-item active open' : 'menu-item' }}">
-                        <a href="#" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="">Data</div>
-                        </a>
-                        <ul class="menu-sub ">
-                            <li class="menu-item">
-                                <a href="/data-mahasiswa" class="menu-link">
-                                    <div data-i18n="Account">Data Mahasiswa</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="/data-dosen" class="menu-link">
-                                    <div data-i18n="Notifications">Data Dosen</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li
-                        class="menu-item {{ request()->is('akun/mahasiswa', 'akun/dosen', 'akun/admin') ? 'menu-item active open' : 'menu-item' }}">
-                        <a href="#" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                            <div data-i18n="">Akun</div>
-                        </a>
-                        <ul class="menu-sub ">
-                            <li class="menu-item">
-                                <a href="/akun/mahasiswa" class="menu-link">
-                                    <div data-i18n="Account">Akun Mahasiswa</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="/akun/dosen" class="menu-link">
-                                    <div data-i18n="Notifications">Akun Dosen</div>
-                                </a>
-                            </li>
-                            <li class="menu-item">
-                                <a href="/akun/admin" class="menu-link">
-                                    <div data-i18n="Notifications">Akun Admin</div>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- Components -->
-                    <li class="menu-header small text-uppercase"><span class="menu-header-text">Manajemen
-                            Skripsi</span></li>
-                    <!-- Cards -->
-                    <li class="menu-item">
-                        <a href="/progres-skripsi" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-pie-chart"></i>
-                            <div data-i18n="Basic">Progres Skripsi</div>
-                        </a>
-                    </li>
-                    <!-- User interface -->
-                    <li class="menu-item">
-                        <a href="/jadwal-sidang" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-calendar"></i>
-                            <div data-i18n="User interface">Jadwal Sidang</div>
+                    <li class="menu-item {{ Request::is('#') ? 'active' : '' }}">
+                        <a href="#" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-conversation"></i>
+                            <div data-i18n="Basic">Bimbingan</div>
                         </a>
                     </li>
                 </ul>
@@ -274,29 +223,6 @@
                 }
             });
         </script>
-
-
-
-        {{-- <script>
-            // Get the current URL path
-            var path = window.location.pathname;
-
-            // Find the corresponding menu item and make it active
-            $('.menu-item a').each(function() {
-                var href = $(this).attr('href');
-                if (path === href) {
-                    $(this).closest('.menu-item').addClass('active');
-                }
-            });
-
-            // Find the corresponding submenu item and make its parent menu item active
-            $('.menu-sub a').each(function() {
-                var href = $(this).attr('href');
-                if (path === href) {
-                    $(this).closest('.menu-item').addClass('active');
-                }
-            });
-        </script> --}}
 
         @yield('scripts')
 
