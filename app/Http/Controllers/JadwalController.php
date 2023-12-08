@@ -50,7 +50,7 @@ class JadwalController extends Controller
             if ($skripsi) {
                 $data['skripsi_id'] = $skripsi->id;
                 $newJadwal = Jadwal::create($data);
-                return redirect(route('jadwal-sidang.index'))->with('success', 'Data Skripsi berhasil disimpan.');;
+                return redirect(route('jadwal-sidang.index'))->with('success', 'Jadwal berhasil disimpan.');;
             } else {
                 return redirect()->back()->with('error', 'Skripsi tidak ditemukan untuk mahasiswa ini.');
             }
@@ -96,7 +96,7 @@ class JadwalController extends Controller
                 // Update jadwal
                 $jadwal->update($data);
 
-                return redirect(route('jadwal-sidang.index'))->with('success', 'Data Skripsi berhasil diperbarui.');
+                return redirect(route('jadwal-sidang.index'))->with('success', 'Jadwal berhasil diperbarui.');
             } else {
                 return redirect()->back()->with('error', 'Skripsi tidak ditemukan untuk mahasiswa ini.');
             }
@@ -109,6 +109,6 @@ class JadwalController extends Controller
     {
         $jadwal->delete();
 
-        return redirect()->route('jadwal-sidang.index');
+        return redirect()->route('jadwal-sidang.index')->with('success', 'Jadwal berhasil dihapus');;
     }
 }

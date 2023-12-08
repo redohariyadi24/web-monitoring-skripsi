@@ -96,13 +96,7 @@
                         <li>
                             <a class="dropdown-item" href="#">
                                 <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-cog me-2"></i>
-                                <span class="align-middle">Settings</span>
+                                <span class="align-middle">Profil Saya</span>
                             </a>
                         </li>
                         <li>
@@ -122,19 +116,19 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item {{ Request::is('beranda') ? 'active' : '' }}">
-                        <a href="beranda-mahasiswa" class="menu-link">
+                        <a href="beranda" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Beranda</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ Request::is('#') ? 'active' : '' }}">
-                        <a href="#" class="menu-link">
-                            <i class="menu-icon tf-icons bx bx-pie-chart"></i>
-                            <div data-i18n="Basic">Progres Skripsi</div>
+                    <li class="menu-item {{ Request::is('skripsi') ? 'active' : '' }}">
+                        <a href="skripsi" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-book-bookmark"></i>
+                            <div data-i18n="Basic">Skripsi</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ Request::is('#') ? 'active' : '' }}">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item {{ Request::is('bimbingan') ? 'active' : '' }}">
+                        <a href="bimbingan" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-conversation"></i>
                             <div data-i18n="Basic">Bimbingan</div>
                         </a>
@@ -151,6 +145,9 @@
                         <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
                             <i class="bx bx-menu bx-sm"></i>
                         </a>
+                    </div>
+                    <div class="">
+                        <h4 class="mb-0"><strong>@yield('title', 'Default Title')</strong></h4>
                     </div>
                 </nav>
                 <!-- / Navbar -->

@@ -379,25 +379,39 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="card" style="background-color: var(--bs-blue);">
-                                <div
-                                    class="card-header text-white d-flex justify-content-between align-items-center pb-1 pt-3">
-                                    <strong class="me-auto">Bimbingan 3 </strong>
-                                    <p class="mb-0 text-end">Senin, 02 Oktober 2023</p>
-                                </div>
-                                <div class="card mx-3 mb-3">
-                                    <div class="row p-3 d-flex justify-content-between align-items-center">
-                                        <div class="col-7 col-md-7 col-lg-8">
-                                            <h6 class="mb-0">Bab 1.1 Latar Belakang</h6>
-                                            <small class="mb-0">Dosen Pembimbing 1</small>
-                                        </div>
-                                        <div class="col-5 col-md-5 col-lg-4 text-end">
-                                            <small class="mb-0" style="color: #007bff;">Mengunggu
-                                                Konfirmasi</small>
+                            @if ($terbaruBimbingan)
+                                <div class="card"
+                                    style="background-color: {{ getStatusColor($terbaruBimbingan->status) }}">
+                                    <div
+                                        class="card-header text-white d-flex justify-content-between align-items-center pb-1 pt-3">
+                                        <strong class="me-auto">{{ $terbaruBimbingan->nama }} </strong>
+                                        <p id="tanggal-terbaru" class="mb-0 text-end"></p>
+                                    </div>
+                                    <div class="card mx-3 mb-3">
+                                        <div class="row p-3 d-flex justify-content-between align-items-center">
+                                            <div class="col-7 col-md-7 col-lg-8">
+                                                @if ($terbaruBimbingan->subbab)
+                                                    <h6 class="mb-0">Bab {{ $terbaruBimbingan->subbab->nama }}</h6>
+                                                @elseif ($terbaruBimbingan->bab)
+                                                    <h6 class="mb-0">{{ $terbaruBimbingan->bab->nama }}</h6>
+                                                @else
+                                                    <h6 class="mb-0">No Bab/Subbab specified</h6>
+                                                @endif
+                                                <small class="mb-0">Pembimbing
+                                                    {{ $terbaruBimbingan->dosen->nama }}</small>
+                                            </div>
+                                            <div class="col-5 col-md-5 col-lg-4 text-end">
+                                                <small class="mb-0"
+                                                    style="color: {{ getStatusColor($terbaruBimbingan->status) }};">{{ ucwords($terbaruBimbingan->status) }}</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="card" style="background-color: var(--bs-blue);">
+                                    <p>No bimbingan records found.</p>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -443,13 +457,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
+
 @endsection
 
 @section('button')
-
     <div class="mt-3">
         <div class="add-button">
             <button type="button" class="btn-add-button rounded-pill btn-icon btn-xl" data-bs-toggle="modal"
@@ -457,61 +470,8 @@
                 <span class="tf-icons bx bx-plus bx-lg"></span>
             </button>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalCenterTitle">Bimbingan 1</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="basic-default-name">Tanggal</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="basic-default-name" readonly />
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="basic-default-name">Nama</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="basic-default-name"
-                                    value=" {{ $mahasiswa->nama }}" readonly />
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="basic-default-name">Nama Dosen</label>
-                            <div class="col-sm-9">
-                                <select class="form-select" id="exampleFormControlSelect1"
-                                    aria-label="Default select example">
-                                    <option selected>Pilih Dosen</option>
-                                    <option value="{{ $dosen1->nip }}">{{ $dosen1->nama }}</option>
-                                    <option value="{{ $dosen2->nip }}">{{ $dosen2->nama }}</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="basic-default-name">Sub Bab</label>
-                            <div class="col-sm-9">
-                                <select class="form-select" id="exampleFormControlSelect1"
-                                    aria-label="Default select example">
-                                    <option selected>Pilih Sub Bab</option>
-                                    <option value="0">Abstrak</option>
-                                    <option value="1">Bab 1.1 Latar Belakang</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+    @include('mahasiswa.tambah-bimbingan')
 @endsection
 
 @section('scripts')
@@ -537,6 +497,61 @@
             // Set the input value
             document.getElementById("basic-default-name").value = formattedDate;
         });
+
+        // Function to get day name
+        function getDayName(dayIndex) {
+            var dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            return dayNames[dayIndex];
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let babSelect = document.getElementById("bab");
+            let subBabSelect = document.getElementById("subBab");
+
+            babSelect.addEventListener("change", function() {
+                let selectedBabId = babSelect.value;
+
+                // Clear existing options
+                subBabSelect.innerHTML = '<option selected>Pilih Sub Bab</option>';
+
+                // Filter subBabs based on the selected Bab
+                let filteredSubBabs = @json($subBabs->groupBy('bab_id')->toArray())[
+                    selectedBabId
+                ] || [];
+
+                // Populate subBabSelect with filtered options
+                filteredSubBabs.forEach(function(subBab) {
+                    let option = document.createElement("option");
+                    option.value = subBab.id;
+                    option.textContent = subBab.nama;
+                    subBabSelect.appendChild(option);
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the formatted date for terbaruBimbingan
+            var dateTerbaruBimbingan = "{{ $terbaruBimbingan->tanggal }}";
+            var formattedDateTerbaruBimbingan = formatDate(dateTerbaruBimbingan);
+            document.getElementById("tanggal-terbaru").textContent = formattedDateTerbaruBimbingan;
+        });
+
+        // Function to format date
+        function formatDate(dateString) {
+            var currentDate = new Date(dateString);
+            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                "September", "Oktober", "November", "Desember"
+            ];
+
+            var dayName = getDayName(currentDate.getDay());
+            var day = currentDate.getDate();
+            var month = monthNames[currentDate.getMonth()];
+            var year = currentDate.getFullYear();
+
+            return dayName + ", " + day + " " + month + " " + year;
+        }
 
         // Function to get day name
         function getDayName(dayIndex) {

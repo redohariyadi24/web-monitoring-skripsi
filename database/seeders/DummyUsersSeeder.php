@@ -21,7 +21,13 @@ class DummyUsersSeeder extends Seeder
                 'password' => bcrypt('123456')
             ],
             [
-                'name' => 'Agus Susanto, S.T., M.Kom.',
+                'name' => 'Seprina Dwi Cahyani',
+                'username' => 'G1A021012',
+                'role' => 'mahasiswa',
+                'password' => bcrypt('123456')
+            ],
+            [
+                'name' => 'Agus Susanto',
                 'username' => '198608282022031006',
                 'role' => 'dosen',
                 'password' => bcrypt('123456')

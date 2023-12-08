@@ -122,13 +122,13 @@
                 <ul class="menu-inner py-1">
                     <!-- Dashboard -->
                     <li class="menu-item {{ Request::is('beranda-dosen') ? 'active' : '' }}">
-                        <a href="beranda-mahasiswa" class="menu-link">
+                        <a href="beranda-dosen" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-home-circle"></i>
                             <div data-i18n="Analytics">Beranda</div>
                         </a>
                     </li>
-                    <li class="menu-item {{ Request::is('#') ? 'active' : '' }}">
-                        <a href="#" class="menu-link">
+                    <li class="menu-item {{ Request::is('bimbingan-dosen') ? 'active' : '' }}">
+                        <a href="bimbingan-dosen" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-conversation"></i>
                             <div data-i18n="Basic">Bimbingan</div>
                         </a>

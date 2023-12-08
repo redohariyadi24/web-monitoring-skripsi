@@ -52,7 +52,7 @@
                                         <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{{ route('dosen.edit', ['role' => 'dosen', 'id' => $akun->id]) }}">
+                                        <a class="dropdown-item" href="{{-- {{ route('dosen.edit', ['role' => 'dosen', 'id' => $akun->id]) }} --}}">
                                             <i class="bx bx-edit-alt me-1"></i> Edit
                                         </a>
                                         <form id="formHapusDosen" action="{{ route('dosen.hapus', ['id' => $akun->id]) }}" method="POST"

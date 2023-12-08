@@ -1,25 +1,37 @@
 <div>
-    <div class="card-header d-flex flex-column flex-md-row">
-        <div class="head-label text">
-            <h4 class="card-title mb-0">Jadwal Sidang Skripsi</h4>
+    <div class="card-header">
+        <div>
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
         </div>
-        <div class="d-flex ms-auto me-3">
-            <div class="input-group">
+        <div class="d-flex flex-column flex-md-row align-items-center">
+            <div class="head-label text">
+                <h4 class="card-title mb-0">Jadwal Sidang Skripsi</h4>
+            </div>
+            <div class="d-flex ms-auto me-3">
                 <div class="input-group">
-                    <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-                    <input type="text" wire:model.live="search" class="form-control" placeholder="Cari Jadwal...">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+                        <input type="text" wire:model.live="search" class="form-control"
+                            placeholder="Cari Jadwal...">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="dt-action-buttons text-end pt-3 pt-md-0">
-            <div class="dt-buttons">
-                <button class="dt-button create-new btn btn-primary" tabindex="0" aria-controls="DataTables_Table_0"
-                    type="button" onclick="window.location.href='{{ route('jadwal-sidang.tambah') }}'">
-                    <span>
-                        <i class="bx bx-plus me-sm-1"></i>
-                        <span class="d-none d-sm-inline-block">Tambah Data</span>
-                    </span>
-                </button>
+            <div class="dt-action-buttons text-end pt-3 pt-md-0">
+                <div class="dt-buttons">
+                    <button class="dt-button create-new btn btn-primary" tabindex="0"
+                        aria-controls="DataTables_Table_0" type="button"
+                        onclick="window.location.href='{{ route('jadwal-sidang.tambah') }}'">
+                        <span>
+                            <i class="bx bx-plus me-sm-1"></i>
+                            <span class="d-none d-sm-inline-block">Tambah Data</span>
+                        </span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

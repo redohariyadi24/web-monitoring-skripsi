@@ -15,6 +15,13 @@ class SkripsiSeeder extends Seeder
     {
         $Data = [
             [
+                'mahasiswa_id' => 1,
+                'dosen1_id' => 2,
+                'dosen2_id' => 1,
+                'judul' => 'Analisis Kinerja Algoritma Machine Learning dalam Deteksi Anomali Jaringan',
+                'progres' => 0
+            ],
+            [
                 'mahasiswa_id' => 5,
                 'dosen1_id' => 1,
                 'dosen2_id' => 2,
@@ -34,6 +41,13 @@ class SkripsiSeeder extends Seeder
                 'dosen2_id' => 3,
                 'judul' => 'Pengaruh Waktu Tidur Terhadap Kenerja Coding Mahasiswa TI',
                 'progres' => 0
+            ],
+            [
+                'mahasiswa_id' => 2,
+                'dosen1_id' => 2,
+                'dosen2_id' => 1,
+                'judul' => 'Pengembangan Aplikasi Mobile untuk Manajemen Inventaris menggunakan Teknologi Barcode',
+                'progres' => 100
             ],
         ];
         foreach ($Data as $key => $value) {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class MahasiswaController extends Controller
 {
@@ -36,7 +38,8 @@ class MahasiswaController extends Controller
             $foto_ekstensi = $foto_file->getClientOriginalExtension();
             $npm_lowercase = Str::lower($data['npm']);
             $foto_nama = $npm_lowercase . date('ymdhis') . "." . $foto_ekstensi;
-            $foto_file->move(public_path('Foto Mahasiswa'), $foto_nama);
+            $resize_foto = Image::make($foto_file)->fit(300, 300);
+            $resize_foto->save(public_path('Foto Mahasiswa') . '/' . $foto_nama);
 
             $data['foto'] = $foto_nama;
         } else {
@@ -70,7 +73,8 @@ class MahasiswaController extends Controller
             $foto_ekstensi = $foto_file->getClientOriginalExtension();
             $npm_lowercase = Str::lower($data['npm']);
             $foto_nama = $npm_lowercase . date('ymdhis') . "." . $foto_ekstensi;
-            $foto_file->move(public_path('Foto Mahasiswa'), $foto_nama);
+            $resize_foto = Image::make($foto_file)->fit(300, 300);
+            $resize_foto->save(public_path('Foto Mahasiswa') . '/' . $foto_nama);
 
             if ($mahasiswa->foto && file_exists(public_path('Foto Mahasiswa') . '/' . $mahasiswa->foto)) {
                 unlink(public_path('Foto Mahasiswa') . '/' . $mahasiswa->foto);
@@ -104,6 +108,6 @@ class MahasiswaController extends Controller
 
         $mahasiswa->delete();
 
-        return redirect(route('data-mahasiswa.index'))->with('success', 'Data Produk Telah Berhasil di Hapus');
+        return redirect(route('data-mahasiswa.index'))->with('success', 'Data Mahasiswa Telah Berhasil di Hapus');
     }
 }

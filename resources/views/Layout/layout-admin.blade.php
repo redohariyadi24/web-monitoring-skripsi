@@ -122,7 +122,7 @@
                     </li>
 
                     <li class="menu-header small text-uppercase">
-                        <span class="menu-header-text">Manajemen Data</span>
+                        <span class="menu-header-text">Manajemen Pengguna</span>
                     </li>
                     <li
                         class="menu-item {{ request()->is('data-mahasiswa') || request()->is('data-dosen') ? 'menu-item active open' : 'menu-item' }}">
@@ -175,6 +175,12 @@
                         <a href="/progres-skripsi" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-pie-chart"></i>
                             <div data-i18n="Basic">Progres Skripsi</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/bimbingan-admin" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-conversation"></i>
+                            <div data-i18n="Basic">Bimbingan</div>
                         </a>
                     </li>
                     <!-- User interface -->

@@ -4800,6 +4800,14 @@ fieldset:disabled .btn {
     line-height: 1.53;
 }
 
+.modal-title-input {
+    border: none;
+    font-size: 1.25rem; /* Adjust the font size as needed */
+    font-weight: bold;
+    background-color: transparent;
+    pointer-events: none; /* Prevent interaction with the input field */
+}
+
 .modal-body {
     position: relative;
     flex: 1 1 auto;
@@ -6701,6 +6709,63 @@ label.btn {
 .btn-info.disabled,
 .btn-info:disabled {
     box-shadow: none;
+}
+
+.btn-outline-purlpe {
+    color: #6610f2;
+    border-color: #6610f2;
+    background: transparent;
+}
+.btn-outline-purlpe:hover {
+    color: #fff;
+    background-color: #6610f2;
+    border-color: #6610f2;
+    box-shadow: 0 0.125rem 0.25rem 0 rgba(118,42,244,0.4);
+    transform: translateY(-1px);
+}
+.btn-check:focus + .btn-outline-purlpe,
+.btn-outline-purlpe:focus {
+    color: #fff;
+    background-color: #6610f2;
+    border-color: #6610f2;
+    box-shadow: none;
+    transform: translateY(0);
+}
+.btn-check:checked + .btn-outline-purlpe,
+.btn-check:active + .btn-outline-purlpe,
+.btn-outline-purlpe:active,
+.btn-outline-purlpe.active,
+.btn-outline-purlpe.dropdown-toggle.show {
+    color: #fff;
+    background-color: #6610f2;
+    border-color: #6610f2;
+}
+.btn-check:checked + .btn-outline-purlpe:focus,
+.btn-check:active + .btn-outline-purlpe:focus,
+.btn-outline-purlpe:active:focus,
+.btn-outline-purlpe.active:focus,
+.btn-outline-purlpe.dropdown-toggle.show:focus {
+    box-shadow: none;
+}
+.btn-outline-purlpe.disabled,
+.btn-outline-purlpe:disabled {
+    box-shadow: none;
+}
+
+.btn-outline-purlpe .badge {
+    background: #6610f2;
+    border-color: #6610f2;
+    color: #fff;
+}
+
+.btn-outline-purlpe:hover .badge,
+.btn-outline-purlpe:focus:hover .badge,
+.btn-outline-purlpe:active .badge,
+.btn-outline-purlpe.active .badge,
+.show > .btn-outline-purlpe.dropdown-toggle .badge {
+    background: #fff;
+    border-color: #fff;
+    color: #6610f2;
 }
 
 .btn-outline-info {

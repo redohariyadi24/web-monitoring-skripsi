@@ -30,4 +30,9 @@ class Dosen extends Model
     {
         return $this->belongsTo(User::class, 'nip', 'npm');
     }
+
+    public function bimbingans()
+    {
+        return $this->hasMany(Bimbingan::class, 'dospem_id');
+    }
 }

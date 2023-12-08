@@ -37,4 +37,9 @@ class Skripsi extends Model
     {
         return $this->hasOne(Jadwal::class);
     }
+
+    public function bimbingans()
+    {
+        return $this->hasMany(Bimbingan::class, 'skripsi_id');
+    }
 }
