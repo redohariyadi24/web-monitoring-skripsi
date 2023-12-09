@@ -3,7 +3,7 @@
 @section('title', 'Tambah Akun')
 
 @section('main')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Akun Admin/</span> Tambah Akun Admin</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Akun Admin/</span> Tambah Akun {{ $role }}</h4>
     <!-- Basic Layout -->
 
     <div class="col-xl mx-auto" style="max-width: 700px">
@@ -12,7 +12,7 @@
                 <h5 class="mb-0">Form Pengisian Akun</h5>
             </div>
             <div class="card-body">
-                <form method="post" action="{{ route( $role.'.simpan') }}">
+                <form method="post" action="{{ route('akun-'.$role.'.simpan') }}">
                     @csrf
                     @method('post')
                     <div class="mb-3">

@@ -8,70 +8,78 @@ use Illuminate\Support\Facades\Hash;
 
 class AkunController extends Controller
 {
+    //Akun Admin
     public function indexAdmin()
     {
         $admin = User::where('role', 'admin')->get();
         return view('admin.akun.admin', compact('admin'));
     }
 
-    public function indexDosen()
+    public function tambahAdmin()
     {
-        $dosen = User::where('role', 'dosen')->get();
-        return view('admin.akun.dosen', compact('dosen'));
+        return view('admin.akun.tambah', ['role' => 'admin']);
     }
-
-    public function indexMahasiswa()
-    {
-        $mahasiswa = User::where('role', 'mahasiswa')->get();
-        return view('admin.akun.mahasiswa', compact('mahasiswa'));
-    }
-
-    public function tambahMahasiswa()
-    {
-        return view('admin.akun.tambah', ['role' => 'mahasiswa']);
-    }
-
-    public function editMahasiswa($id)
-    {
-        $mahasiswa = User::findOrFail($id);
-
-        return view('admin.akun.edit', compact('mahasiswa'));
-    }
-
-    // public function updateMahasiswa(Request $request, $id)
-    // {
-    //     $data = $request->validate([
-    //         'name' => 'required',
-    //         'username' => 'required|unique:users,username,' . $id,
-    //         'password' => 'nullable|min:8', // Bisa diisi atau tidak
-    //         'role' => 'required|in:mahasiswa',
-    //     ]);
-
-    //     // Jika password diisi, hash password baru
-    //     if ($request->filled('password')) {
-    //         $data['password'] = Hash::make($data['password']);
-    //     }
-
-    //     $mahasiswa = User::findOrFail($id);
-    //     $mahasiswa->update($data);
-
-    //     return redirect(route('akun-mahasiswa.index'));
-    // }
-
-
-    public function simpanMahasiswa(Request $request)
+    public function simpanAdmin(Request $request)
     {
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users',
             'password' => 'required|min:8',
-            'role' => 'required|in:mahasiswa',
+            'role' => 'required|in:admin',
         ]);
 
         $data['password'] = Hash::make($data['password']);
 
         User::create($data);
-        return redirect(route('akun-mahasiswa.index'));
+        return redirect(route('akun-admin.index'));
+    }
+
+    public function editAdmin($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.akun.edit', compact('user'));
+    }
+
+    public function updateAdmin(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        // Validasi data dari request
+        $data = $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:users,username,' . $id,
+            'password' => 'nullable|min:8', // Bisa diisi atau tidak
+        ]);
+
+        // Check if a new password is provided
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            // If no new password is provided, keep the old password
+            $data['password'] = $user->password;
+        }
+
+        // Update user with the validated data
+        $user->update($data);
+
+        // Redirect with success message
+        return redirect(route('akun-admin.index'));
+    }
+
+
+    public function hapusAdmin(User $id)
+    {
+        $id->delete();
+
+        return redirect(route('akun-admin.index'))->with('success', 'Akun Telah Berhasil di Hapus');
+    }
+
+    // Akun Dosen
+
+    public function indexDosen()
+    {
+        $dosen = User::where('role', 'dosen')->get();
+        return view('admin.akun.dosen', compact('dosen'));
     }
 
     public function tambahDosen()
@@ -94,104 +102,34 @@ class AkunController extends Controller
         return redirect(route('akun-dosen.index'));
     }
 
-    public function tambahAdmin()
-    {
-        return view('admin.akun.tambah', ['role' => 'admin']);
-    }
-    public function simpanAdmin(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:admin',
-        ]);
-
-        $data['password'] = Hash::make($data['password']);
-
-        User::create($data);
-        return redirect(route('akun-admin.index'));
-    }
-
-    public function edit($role, $id)
+    public function editDosen($id)
     {
         $user = User::findOrFail($id);
-        return view('admin.akun.edit', compact('user', 'role'));
+        return view('admin.akun.edit', compact('user'));
     }
 
-    public function updateMahasiswa(Request $request, $id)
+    public function
+    updateDosen(Request $request, $id)
     {
-        // Temukan user berdasarkan ID
         $user = User::find($id);
-
-        // Periksa apakah user ditemukan
-        if (!$user) {
-            return redirect()->back()->with('error', 'User not found.');
-        }
 
         // Validasi data dari request
         $data = $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users,username,' . $id,
-            'role' => 'required|in:mahasiswa',
+            'password' => 'nullable|min:8', // Bisa diisi atau tidak
         ]);
 
-        dd($data);
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($data['password']);
+        }
 
         // Update user dengan data yang valid
         $user->update($data);
 
         // Redirect dengan pesan sukses
-        return redirect(route('akun-mahasiswa.index'))->with('success', 'User updated successfully.');
-    }
-
-
-    public function updateDosen(Request $request, $id)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users,username,' . $id,
-            'password' => 'nullable|min:8',
-            'role' => 'required|in:dosen',
-        ]);
-
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($data['password']);
-        }
-
-        $user = User::findOrFail($id);
-        $user->update($data);
 
         return redirect(route('akun-dosen.index'));
-    }
-
-    public function updateAdmin(Request $request, $id)
-    {
-        $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users,username,' . $id,
-            'password' => 'nullable|min:8',
-            'role' => 'required|in:admin',
-        ]);
-
-        dd($data);
-
-        if ($request->filled('password')) {
-            $data['password'] = Hash::make($data['password']);
-        }
-
-        $user = User::findOrFail($id);
-        $user->update($data);
-
-        return redirect(route('akun-admin.index'));
-    }
-
-    public function hapusMahasiswa(User $id)
-    {
-        $id->delete();
-
-        return redirect(route('akun-mahasiswa.index'))->with('success', 'Akun Telah Berhasil di Hapus');
     }
 
     public function hapusDosen(User $id)
@@ -201,10 +139,85 @@ class AkunController extends Controller
         return redirect(route('akun-dosen.index'))->with('success', 'Akun Telah Berhasil di Hapus');
     }
 
-    public function hapusAdmin(User $id)
+    // Akun Mahasiswa
+
+    public function indexMahasiswa()
+    {
+        $mahasiswa = User::where('role', 'mahasiswa')->get();
+        return view('admin.akun.mahasiswa', compact('mahasiswa'));
+    }
+
+    public function tambahMahasiswa()
+    {
+        return view('admin.akun.tambah', ['role' => 'mahasiswa']);
+    }
+
+    public function simpanMahasiswa(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:users',
+            'password' => 'required|min:8',
+            'role' => 'required|in:mahasiswa',
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+
+        User::create($data);
+        return redirect(route('akun-mahasiswa.index'));
+    }
+
+    public function editMahasiswa($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.akun.edit', compact('user'));
+    }
+
+    // public function updateMahasiswa(Request $request, $id)
+    // {
+    //     $data = $request->validate([
+    //         'name' => 'required',
+    //         'username' => 'required|unique:users,username,' . $id,
+    //         'role' => 'required|in:mahasiswa',
+    //     ]);
+
+    //     // Jika password diisi, hash password baru
+    //     if ($request->filled('password')) {
+    //         $data['password'] = Hash::make($data['password']);
+    //     }
+
+    //     $mahasiswa = User::findOrFail($id);
+    //     $mahasiswa->update($data);
+
+    //     return redirect(route('akun-mahasiswa.index'));
+    // }
+
+    public function updateMahasiswa(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        // Validasi data dari request
+        $data = $request->validate([
+            'name' => 'required',
+            'username' => 'required|unique:users,username,' . $id,
+            'password' => 'nullable|min:8', // Bisa diisi atau tidak
+        ]);
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($data['password']);
+        }
+
+        // Update user dengan data yang valid
+        $user->update($data);
+
+        // Redirect dengan pesan sukses
+        return redirect(route('akun-mahasiswa.index'))->with('success', 'User updated successfully.');
+    }
+
+    public function hapusMahasiswa(User $id)
     {
         $id->delete();
 
-        return redirect(route('akun-admin.index'))->with('success', 'Akun Telah Berhasil di Hapus');
+        return redirect(route('akun-mahasiswa.index'))->with('success', 'Akun Telah Berhasil di Hapus');
     }
 }

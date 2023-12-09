@@ -32,8 +32,12 @@
                     </div>
                 </div>
             @else
-                <div class="card mb-4" style="background-color: var(--bs-blue);">
-                    <p>No bimbingan records found.</p>
+                <div class="card" style="background-color: var(--bs-gray);">
+                    <div class="mb-4 mt-3">
+                        <div class="mx-3 mb-auto">
+                            <p class="text-muted my-5 text-center">Belum Ada Bimbingan</p>
+                        </div>
+                    </div>
                 </div>
             @endif
         </div>
@@ -78,7 +82,13 @@
                         </div>
                     @endforeach
                 @else
-                    <p>No bimbingan records found.</p>
+                    <div class="card" style="background-color: var(--bs-gray);">
+                        <div class="mb-4 mt-3">
+                            <div class="mx-3 mb-auto">
+                                <p class="text-muted my-5 text-center">Belum Ada Bimbingan</p>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
         </div>
@@ -89,17 +99,21 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             // Get the formatted date for terbaruBimbingan
-            var dateTerbaruBimbingan = "{{ $terbaruBimbingan->tanggal }}";
-            var formattedDateTerbaruBimbingan = formatDate(dateTerbaruBimbingan);
-            document.getElementById("tanggal-terbaru").textContent = formattedDateTerbaruBimbingan;
+            var dateTerbaruBimbingan = "{{ optional($terbaruBimbingan)->tanggal }}";
+            if (dateTerbaruBimbingan) {
+                var formattedDateTerbaruBimbingan = formatDate(dateTerbaruBimbingan);
+                document.getElementById("tanggal-terbaru").textContent = formattedDateTerbaruBimbingan;
+            }
 
             // Get the formatted date for each riwayatBimbingan
             @foreach ($riwayatBimbingan as $index => $bimbingan)
-                var dateRiwayatBimbingan{{ $index }} = "{{ $bimbingan->tanggal }}";
-                var formattedDateRiwayatBimbingan{{ $index }} = formatDate(
-                    dateRiwayatBimbingan{{ $index }});
-                document.getElementById("tanggal-riwayat-{{ $index }}").textContent =
-                    formattedDateRiwayatBimbingan{{ $index }};
+                var dateRiwayatBimbingan{{ $index }} = "{{ optional($bimbingan)->tanggal }}";
+                if (dateRiwayatBimbingan{{ $index }}) {
+                    var formattedDateRiwayatBimbingan{{ $index }} = formatDate(
+                        dateRiwayatBimbingan{{ $index }});
+                    document.getElementById("tanggal-riwayat-{{ $index }}").textContent =
+                        formattedDateRiwayatBimbingan{{ $index }};
+                }
             @endforeach
         });
 

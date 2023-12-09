@@ -408,8 +408,12 @@
                                     </div>
                                 </div>
                             @else
-                                <div class="card" style="background-color: var(--bs-blue);">
-                                    <p>No bimbingan records found.</p>
+                                <div class="card" style="background-color: var(--bs-gray);">
+                                    <div class="mb-4 mt-3">
+                                        <div class="mx-3 mb-auto">
+                                            <p class="text-muted my-5 text-center">Belum Ada Bimbingan</p>
+                                        </div>
+                                    </div>
                                 </div>
                             @endif
                         </div>
@@ -532,10 +536,14 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Get the formatted date for terbaruBimbingan
-            var dateTerbaruBimbingan = "{{ $terbaruBimbingan->tanggal }}";
-            var formattedDateTerbaruBimbingan = formatDate(dateTerbaruBimbingan);
-            document.getElementById("tanggal-terbaru").textContent = formattedDateTerbaruBimbingan;
+            var terbaruBimbingan = @json($terbaruBimbingan);
+
+            if (terbaruBimbingan) {
+                // Get the formatted date for terbaruBimbingan
+                var dateTerbaruBimbingan = terbaruBimbingan.tanggal;
+                var formattedDateTerbaruBimbingan = formatDate(dateTerbaruBimbingan);
+                document.getElementById("tanggal-terbaru").textContent = formattedDateTerbaruBimbingan;
+            }
         });
 
         // Function to format date
@@ -559,4 +567,5 @@
             return dayNames[dayIndex];
         }
     </script>
+
 @endsection

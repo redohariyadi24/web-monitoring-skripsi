@@ -40,6 +40,6 @@ class BimbinganDosenController extends Controller
         $bimbingan->status = $hasil;
         $bimbingan->save();
 
-        return redirect()->back()->with('status', 'Status berhasil diperbarui');
+        return redirect()->back()->with('success', 'Status berhasil diperbarui');
     }
 }
