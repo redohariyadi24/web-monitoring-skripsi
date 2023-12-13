@@ -25,28 +25,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [UserController::class, 'landingpage'])->name('landing-page');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [SesiController::class, 'index'])->name('login-index');
     Route::post('/login', [SesiController::class, 'login'])->name('login');
 });
 
-Route::get('/home', function () {
-    return redirect('/user');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
-    Route::get('/user', [UserController::class, 'index']);
 
 
     //Mahasiswa
     Route::get('/beranda', [UserController::class, 'mahasiswa'])->middleware('userAkses:mahasiswa')
         ->name('dashboard-mahasiswa');
-    Route::post('/beranda', [BimbinganMahasiswaController::class, 'simpan'])->middleware('userAkses:mahasiswa')
+    Route::post('/beranda/simpan', [BimbinganMahasiswaController::class, 'simpan'])->middleware('userAkses:mahasiswa')
         ->name('bimbingan-mahasiswa.simpan');
 
     Route::get('/skripsi', [SkripsiMahasiswaController::class, 'index'])->middleware('userAkses:mahasiswa')

@@ -49,9 +49,9 @@
             $no = 1;
             ?>
             <tbody class="table-border-bottom-0">
-                @foreach ($dosens as $dosen)
+                @foreach ($dosens  as $index => $dosen)
                     <tr>
-                        <td>{{ $no++ }}</td>
+                        <td>{{ $dosens->firstItem() + $index }}</td>
                         <td><i class="fab"></i> <strong>{{ $dosen->nip }}</strong></td>
                         <td class="" style="">
                             <div class="d-flex justify-content-start align-items-center user-name">

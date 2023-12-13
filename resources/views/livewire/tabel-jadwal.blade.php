@@ -51,9 +51,9 @@
             <?php $no = 1; ?>
             <tbody class="table-border-bottom-0">
                 @if (count($jadwals) > 0)
-                    @foreach ($jadwals as $jadwal)
+                    @foreach ($jadwals as $index => $jadwal)
                         <tr>
-                            <td>{{ $no++ }}</td>
+                            <td>{{ $jadwals->firstItem() + $index }}</td>
                             <td
                                 class="{{ \Carbon\Carbon::parse($jadwal->tanggal)->isSameDay(now()) ? 'text-primary' : (\Carbon\Carbon::parse($jadwal->tanggal)->lt(now()) ? 'text-muted' : 'text-success') }}">
                                 <strong>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('Y-m-d') }}</strong>

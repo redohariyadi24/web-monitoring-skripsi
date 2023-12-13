@@ -14,20 +14,15 @@ class BimbinganDosenController extends Controller
         $user = Auth::user();
         $dosen = $user->dosen;
 
-        $skripsis = Skripsi::whereHas('dosen1', function ($query) use ($dosen) {
-            $query->where('id', $dosen->id);
-        })
-        ->orWhereHas('dosen2', function ($query) use ($dosen) {
-            $query->where('id', $dosen->id);
-        })
-        ->with(['mahasiswa', 'dosen1', 'dosen2'])
-        ->get();
+        $bimbingans = Bimbingan::where('dospem_id', $dosen->id)
+            ->where('status', 'menunggu konfirmasi')
+            ->get();
 
-        // Mengembalikan view dengan data yang diperbarui
+        // Return view with data
         return view('dosen.bimbingan', [
             'user' => $user,
             'dosen' => $dosen,
-            'skripsis' => $skripsis
+            'bimbingans' => $bimbingans,
         ])->with('layout', 'layout.layout-dosen');
     }
 
@@ -35,11 +30,45 @@ class BimbinganDosenController extends Controller
     {
         $bimbinganId = $request->input('bimbingan_id');
         $hasil = $request->input('hasil');
-
         $bimbingan = Bimbingan::find($bimbinganId);
+
+        if ($hasil == 'acc') {
+            $progres = $bimbingan->skripsi->progres;
+            $hasSubbabs = $bimbingan->bab->subbabs->isNotEmpty();
+            $progressValues = [
+                'Abstrak' => 2,
+                'Bab 1' => 12,
+                'Bab 2' => 8,
+                'Bab 3' => 18,
+                'Bab 4' => 6,
+                'Bab 5' => 4,
+            ];
+
+            $babName = $bimbingan->bab->nama;
+
+            if (!$hasSubbabs || $bimbingan->subbab_id === null) {
+                $progres += $progressValues[$babName];
+            } else {
+                $numSubbabs = $bimbingan->bab->subbabs->count();
+                $progressValues[$babName] = 1 / $numSubbabs * $progressValues[$babName];
+                $progres += $progressValues[$babName];
+            }
+
+            $progres = min($progres, 100);
+
+            $bimbingan->skripsi->progres = $progres;
+            $bimbingan->skripsi->save();
+
+            $message = 'Bimbingan berhasil di ACC';
+        } elseif ($hasil == 'revisi') {
+            $message = 'Hasil Bimbingan adalah Revisi';
+        } 
+
         $bimbingan->status = $hasil;
         $bimbingan->save();
 
-        return redirect()->back()->with('success', 'Status berhasil diperbarui');
+        // Pass the message to the view
+        return redirect()->back()->with('message', $message);
     }
+
 }

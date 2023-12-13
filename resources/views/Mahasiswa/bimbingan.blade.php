@@ -4,6 +4,16 @@
 
 @section('main')
     <div class="row">
+        <div class="col-12">
+            @if (session('success'))
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+            @endif
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-10 col-lg-10 col-xl-11 mx-auto">
             @if ($terbaruBimbingan)
                 <div class="card mb-4" style="background-color: {{ getStatusColor($terbaruBimbingan->status) }};">
@@ -58,9 +68,9 @@
                                     <h5 class="mb-0 me-4"><strong>{{ $bimbingan->nama }}</strong></h5>
                                     <p id="tanggal-riwayat-{{ $index }}" class="mb-0"></p>
                                 </div>
-                                <div class="card ms-4 p-3">
+                                <div class="card ms-md-4 p-3">
                                     <div class="row">
-                                        <div class="col-4 col-sm-6 col-md-8 col-lg-8 col-xl-8">
+                                        <div class="col-6 col-sm-6 col-md-8 col-lg-8 col-xl-8">
                                             @if ($bimbingan->subbab)
                                                 <h6 class="mb-0"><strong>Bab {{ $bimbingan->subbab->nama }}</strong></h6>
                                             @elseif ($bimbingan->bab)
@@ -70,7 +80,7 @@
                                             @endif
                                         </div>
                                         <div
-                                            class="col-8 col-sm-6 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-between align-items-center">
+                                            class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-between align-items-center">
                                             <h6 class="m-0 me-4">{{ $bimbingan->dosen->nama }}</h6>
                                             <h6 class="m-0" style="color: {{ getStatusColor($bimbingan->status) }}">
                                                 <strong>{{ ucwords($bimbingan->status) }}</strong>

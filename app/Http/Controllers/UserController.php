@@ -12,10 +12,26 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    function index()
+    function landingpage()
     {
-        echo "Hallo user " . Auth::user()->name . ". <br>";
-        echo "<a href='logout'>Logout</a>";
+        $progres = Skripsi::orderby('progres', 'desc')->get();
+        $result = $progres->groupBy('progres')
+        ->map(function ($group) {
+            return $group->count();
+        });
+        $outputData = [];
+
+        foreach ($result as $x => $y) {
+            $outputData[] = [
+                'x' => 'Progres ' . $x . '%', // Assuming you want categories labeled A, B, C, etc.
+                'y' => $y,
+            ];
+        }
+
+        // echo json_encode(['data' => $outputData], JSON_PRETTY_PRINT);
+        // dd($outputData);
+        // dd($proges);
+        return view('landing-page',['result' => $outputData]);
     }
     function mahasiswa()
     {
@@ -33,8 +49,9 @@ class UserController extends Controller
         $subBabs = Subbab::with('bab')->get();
 
         $bimbingans = $mahasiswa->bimbingans()->orderBy('created_at', 'desc')->get();
-
+        $jumlahBimbingan = $bimbingans->count() + 1;
         // Separate the latest and the rest
+        // dd($jumlahBimbingan);
         $terbaruBimbingan = $bimbingans->shift();
 
         return view('mahasiswa.index', [
@@ -47,8 +64,10 @@ class UserController extends Controller
             'babs' => $babs,
             'subBabs' => $subBabs,
             'terbaruBimbingan' => $terbaruBimbingan,
+            'bimbingans' => $jumlahBimbingan,
         ])->with('layout', 'layout.layout-mahasiswa');
     }
+    
     function dosen()
     {
         // Mendapatkan user yang sedang login
@@ -77,7 +96,7 @@ class UserController extends Controller
     function admin()
     {
         $user = Auth::user();
-        $mahasiswajumlah= Mahasiswa::count();
+        $mahasiswajumlah = Mahasiswa::count();
 
         $skripsijumlah = Skripsi::count();
         $skripsiBelum = Skripsi::where('progres', '<', 100)->count();
@@ -86,9 +105,9 @@ class UserController extends Controller
         $presentaseSkripsiSelesai = ($skripsijumlah - $skripsiBelum) / $skripsijumlah * 100;
 
         $skripsibelumJadwal =
-                    Skripsi::where('progres', 100)
-                    ->doesntHave('jadwal')
-                    ->count();
+            Skripsi::where('progres', 100)
+            ->doesntHave('jadwal')
+            ->count();
         return view('admin.index', [
             'user' => $user,
             'skripsibelumJadwal' => $skripsibelumJadwal,

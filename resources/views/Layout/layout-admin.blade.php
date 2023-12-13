@@ -146,7 +146,7 @@
                     <li
                         class="menu-item {{ request()->is('akun/mahasiswa', 'akun/dosen', 'akun/admin') ? 'menu-item active open' : 'menu-item' }}">
                         <a href="#" class="menu-link menu-toggle">
-                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <i class="menu-icon tf-icons bx bx-user"></i>
                             <div data-i18n="">Akun</div>
                         </a>
                         <ul class="menu-sub ">

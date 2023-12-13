@@ -122,6 +122,9 @@ class AkunController extends Controller
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($data['password']);
+        } else {
+            // If no new password is provided, keep the old password
+            $data['password'] = $user->password;
         }
 
         // Update user dengan data yang valid
@@ -173,25 +176,6 @@ class AkunController extends Controller
         return view('admin.akun.edit', compact('user'));
     }
 
-    // public function updateMahasiswa(Request $request, $id)
-    // {
-    //     $data = $request->validate([
-    //         'name' => 'required',
-    //         'username' => 'required|unique:users,username,' . $id,
-    //         'role' => 'required|in:mahasiswa',
-    //     ]);
-
-    //     // Jika password diisi, hash password baru
-    //     if ($request->filled('password')) {
-    //         $data['password'] = Hash::make($data['password']);
-    //     }
-
-    //     $mahasiswa = User::findOrFail($id);
-    //     $mahasiswa->update($data);
-
-    //     return redirect(route('akun-mahasiswa.index'));
-    // }
-
     public function updateMahasiswa(Request $request, $id)
     {
         $user = User::find($id);
@@ -205,7 +189,11 @@ class AkunController extends Controller
 
         if ($request->filled('password')) {
             $data['password'] = Hash::make($data['password']);
+        } else {
+            // If no new password is provided, keep the old password
+            $data['password'] = $user->password;
         }
+
 
         // Update user dengan data yang valid
         $user->update($data);

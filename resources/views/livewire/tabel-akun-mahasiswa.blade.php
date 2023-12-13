@@ -35,9 +35,9 @@
             </thead>
             <?php $no = 1; ?>
             <tbody class="table-border-bottom-0">
-                @foreach ($mahasiswa as $akun)
+                @foreach ($mahasiswa  as $index => $akun)
                     <tr>
-                        <td>{{ $no++ }}</td>
+                        <td>{{ $mahasiswa->firstItem() + $index }}</td>
                         <td>{{ $akun->username }}</td>
                         <td>{{ $akun->name }}</td>
                         <td>

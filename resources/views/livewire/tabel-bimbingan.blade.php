@@ -48,14 +48,10 @@
                         <th></th>
                     </tr>
                 </thead>
-                <?php
-                // Mendapatkan nilai $no dari sesi atau mengatur ke 1 jika tidak ada
-                $no = 1;
-                ?>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($bimbingans as $bimbingan)
+                    @foreach ($bimbingans as $index => $bimbingan)
                         <tr>
-                            <td>{{ $no++ }}</td>
+                            <td>{{ $bimbingans->firstItem() + $index  }}</td>
                             <td class="" style="">
                                 <div class="d-flex justify-content-start align-items-center user-name">
                                     <div class="avatar-wrapper">

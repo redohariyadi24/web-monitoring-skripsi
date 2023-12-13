@@ -35,19 +35,21 @@ class BimbinganMahasiswaController extends Controller
 
     public function simpan(Request $request)
     {
-        // Validate the form data
+        // dd($request);
         $data = $request->validate([
             'nama' => 'required|string',
             'tanggal' => 'required|date',
             'mahasiswa_id' => 'required',
-            'skripsi_id' => 'required',
-            'dospem_nip' => 'required',
+            'dospem_id' => 'required',
             'bab_id' => 'required',
             'subbab_id' => 'nullable',
         ]);
 
+        $skripsi = Skripsi::where('mahasiswa_id', $data['mahasiswa_id'])->first();
+        $data['skripsi_id'] = $skripsi->id;
+
         $newBimbingan = Bimbingan::create($data);
 
-        return redirect(route('bimbingan-mahasiswa'))->with('success', 'Bimbingan berhasil disimpan.');
+        return redirect(route('bimbingan-mahasiswa'))->with('success', 'Bimbingan berhasil ditambahkan');
     }
 }

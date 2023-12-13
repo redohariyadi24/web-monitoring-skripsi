@@ -1,27 +1,26 @@
 <form method="post" action="{{ route('bimbingan-mahasiswa.simpan') }}">
     @csrf
     @method('post')
-    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modalCenter" tabindex="-1" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <input name="nama" type="text" class="form-control modal-title-input" id="bimbinganTitle"
-                        placeholder="Bimbingan" value="Bimbingan 2">
+                        placeholder="Bimbingan" value="Bimbingan {{ $bimbingans }}">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label" for="basic-default-name">Tanggal</label>
                         <div class="col-sm-9">
-                            <input name="tanggal" type="text" class="form-control" id="basic-default-name"
-                                value="{{ now()->format('Y-m-d') }}" readonly />
+                            <input name="tanggal" type="date" class="form-control" id="basic-default-name" />
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label class="col-sm-3 col-form-label" for="basic-default-name">Nama</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="basic-default-name"
-                                value="{{ $mahasiswa->nama }}" readonly />
+                                value="{{ $mahasiswa->nama }} " readonly />
                             <input type="hidden" name="mahasiswa_id" value="{{ $mahasiswa->id }}">
                         </div>
                     </div>
@@ -70,4 +69,5 @@
                 </div>
             </div>
         </div>
+    </div>
 </form>
