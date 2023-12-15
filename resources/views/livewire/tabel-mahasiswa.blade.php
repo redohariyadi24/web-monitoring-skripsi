@@ -84,9 +84,9 @@
                             </div>
                         </td>
                         <td>Semester {{ $mahasiswa->semester }}</td>
-                        <td>
+                        <td style="max-width: 360px; white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">
                             @if ($mahasiswa->skripsi)
-                                <div><strong>{{ $mahasiswa->skripsi->judul }}</strong></div>
+                                <strong>{{ $mahasiswa->skripsi->judul }}</strong>
                             @else
                                 <div class="text-muted">
                                     <em>Belum ada judul skripsi</em>

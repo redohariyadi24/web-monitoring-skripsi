@@ -94,7 +94,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{ route('profil-mahasiswa') }}">
                                 <i class="bx bx-user me-2"></i>
                                 <span class="align-middle">Profil Saya</span>
                             </a>

@@ -7,6 +7,7 @@ use App\Http\Controllers\BimbinganMahasiswaController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SkripsiController;
 use App\Http\Controllers\SkripsiMahasiswaController;
@@ -47,6 +48,13 @@ Route::middleware(['auth'])->group(function () {
         ->name('skripsi-mahasiswa');
     Route::get('/bimbingan', [BimbinganMahasiswaController::class, 'index'])->middleware('userAkses:mahasiswa')
         ->name('bimbingan-mahasiswa');
+    
+    Route::get('/profil-mahasiswa', [ProfilController::class, 'profilmahasiswa'])->middleware('userAkses:mahasiswa')
+    ->name('profil-mahasiswa');
+    Route::post('/profil-mahasiswa/password/update/{id}', [ProfilController::class, 'password'])->middleware('userAkses:mahasiswa')
+    ->name('profil-mahasiswa.password');
+    Route::post('/profil-mahasiswa/foto/update/{id}', [ProfilController::class, 'fotoProfil'])->middleware('userAkses:mahasiswa')
+    ->name('profil-mahasiswa.fotoProfil');
 
     // Dosen
     Route::get('/beranda-dosen', [UserController::class, 'dosen'])->middleware('userAkses:dosen')
@@ -55,6 +63,13 @@ Route::middleware(['auth'])->group(function () {
         ->name('bimbingan-dosen');
     Route::post('/bimbingan-hasil', [BimbinganDosenController::class, 'hasilBimbingan'])->middleware('userAkses:dosen')
         ->name('hasil-bimbingan');
+
+    Route::get('/profil-dosen', [ProfilController::class, 'profildosen'])->middleware('userAkses:dosen')
+    ->name('profil-dosen');
+    Route::post('/profil-dosen/password/update/{id}', [ProfilController::class, 'password'])->middleware('userAkses:dosen')
+    ->name('profil-dosen.password');
+    Route::post('/profil-dosen/foto/update/{id}', [ProfilController::class, 'fotoProfil2'])->middleware('userAkses:dosen')
+    ->name('profil-dosen.fotoProfil2');
 
     //Admin
     Route::get('/dashboard', [UserController::class, 'admin'])->middleware('userAkses:admin')->name('dashboard-admin');

@@ -43,7 +43,7 @@ class MahasiswaController extends Controller
 
             $data['foto'] = $foto_nama;
         } else {
-            $data['foto'] = null;
+            $data['foto'] = null; 
         }
 
         $newMahasiswa = Mahasiswa::create($data);

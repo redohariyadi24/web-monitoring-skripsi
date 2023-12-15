@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bab;
+use App\Models\Bimbingan;
 use App\Models\Mahasiswa;
 use App\Models\Skripsi;
 use App\Models\Subbab;
@@ -16,9 +17,9 @@ class UserController extends Controller
     {
         $progres = Skripsi::orderby('progres', 'desc')->get();
         $result = $progres->groupBy('progres')
-        ->map(function ($group) {
-            return $group->count();
-        });
+            ->map(function ($group) {
+                return $group->count();
+            });
         $outputData = [];
 
         foreach ($result as $x => $y) {
@@ -31,7 +32,7 @@ class UserController extends Controller
         // echo json_encode(['data' => $outputData], JSON_PRETTY_PRINT);
         // dd($outputData);
         // dd($proges);
-        return view('landing-page',['result' => $outputData]);
+        return view('landing-page', ['result' => $outputData]);
     }
     function mahasiswa()
     {
@@ -67,7 +68,7 @@ class UserController extends Controller
             'bimbingans' => $jumlahBimbingan,
         ])->with('layout', 'layout.layout-mahasiswa');
     }
-    
+
     function dosen()
     {
         // Mendapatkan user yang sedang login
@@ -75,6 +76,15 @@ class UserController extends Controller
 
         // Mendapatkan data dosen terkait dengan user
         $dosen = $user->dosen;
+
+        // Ambil bimbingan yang sedang menunggu konfirmasi
+        $bimbingans = Bimbingan::where('dospem_id', $dosen->id)
+            ->where('status', 'menunggu konfirmasi')
+            ->get();
+
+        // menghitung jumlah bimbingan yang sedang menunggu konfirmasi
+        $notif = $bimbingans->count();
+
 
         // Mendapatkan skripsi yang memiliki salah satu dosen pembimbing sesuai dengan dosen yang sedang login
         $skripsis = Skripsi::whereHas('dosen1', function ($query) use ($dosen) {
@@ -90,7 +100,8 @@ class UserController extends Controller
         return view('dosen.index', [
             'user' => $user,
             'dosen' => $dosen,
-            'skripsis' => $skripsis
+            'skripsis' => $skripsis,
+            'notif' => $notif,
         ])->with('layout', 'layout.layout-dosen');
     }
     function admin()

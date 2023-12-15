@@ -5,6 +5,9 @@
 @section('main')
     <div class="row p-4">
         <div class="col-9">
+            <div>
+                <h2 class="text-white">Selamat Datang di Web Monitoring Skripsi</h2>
+            </div>
         </div>
         <div class="col-3 d-flex justify-content-end">
             <div class="flex-row align-items-center ">
@@ -25,7 +28,6 @@
                         @endauth
                     </div>
                 @endif
-
             </div>
         </div>
     </div>
@@ -34,13 +36,16 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-8 col-lg-6">
                             <div id="boxchart">
-
+                            </div>
+                            <div>
+                                <h5 class="text-center">
+                                    <strong>Progres Skripsi Seluruh Mahasiswa Fakultas Teknik</strong>
+                                </h5>
                             </div>
                         </div>
-                        <div class="col-6">
-
+                        <div class="col-12 col-md-4 col-lg-6">
                         </div>
                     </div>
                 </div>

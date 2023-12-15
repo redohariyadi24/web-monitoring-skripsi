@@ -8,14 +8,14 @@
             @if (session('message'))
                 @if (session('message') == 'Bimbingan berhasil di ACC')
                     <div class="alert alert-success alert-dismissible" role="alert">
-                    {{ session('message') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                        {{ session('message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @elseif(session('message') == 'Hasil Bimbingan adalah Revisi')
                     <div class="alert alert-warning alert-dismissible" role="alert">
-                    {{ session('message')  }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                        {{ session('message') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
             @endif
         </div>
@@ -55,9 +55,142 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Tombol Lihat Riwayat -->
                             <div class="col-4 text-end">
-                                <button type="button" class="btn btn-sm btn-secondary">Lihat Riwayat</button>
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#{{ $bimbingan->mahasiswa->npm }}">Lihat Riwayat</button>
+                            </div>
+                            <div class="modal fade" id="{{ $bimbingan->mahasiswa->npm }}" tabindex="-1" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modalScrollableTitle">Riwayat Bimbingan</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="d-flex justify-content-center mb-3">
+                                                <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                    @if ($bimbingan->mahasiswa->foto)
+                                                        <!-- Jika ada foto, tampilkan foto -->
+                                                        <img src="{{ url('Foto Mahasiswa') . '/' . $bimbingan->mahasiswa->foto }}"
+                                                            alt="user-avatar" class="d-block rounded" height="100"
+                                                            width="100" id="uploadedAvatar" />
+                                                    @else
+                                                        <div class="card rounded bg-label-dark"
+                                                            style="height: 100px; width: 100px; display: flex; align-items: center; justify-content: center;">
+                                                            <h1 class="mb-0"><strong>
+                                                                    {{ generateInitials($bimbingan->mahasiswa->nama) }}
+                                                                </strong></h1>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                                <h3 class="mb-0" style="font-weight: lighter">
+                                                    {{ $bimbingan->mahasiswa->nama }}</h3>
+                                                <p class=" mb-0 text-muted">{{ $bimbingan->mahasiswa->email }}</p>
+                                                <div class="text-dark" style="font-weight: bold">
+                                                    <p class="mb-0 d-inline">{{ $bimbingan->mahasiswa->npm }}</p>
+                                                    </h6>
+                                                    <span class="mx-1">&#124;</span>
+                                                    <p class="mb-0 d-inline">Semester {{ $bimbingan->mahasiswa->semester }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="divider">
+                                                <div class="divider-text">
+                                                    <h5 class="mb-0"><strong>Skripsi</strong></h5>
+                                                </div>
+                                            </div>
+                                            <div class="card-body pt-0 mx-sm-3">
+                                                <div class="row">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="col-4 d-flex justify-content-between">
+                                                            <p>Judul</p>
+                                                            <p class="me-2">:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p>{{ $bimbingan->skripsi->judul }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="col-4 d-flex justify-content-between">
+                                                            <p>Progres</p>
+                                                            <p class="me-2">:</p>
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <div class="d-flex align-items-center">
+                                                                <div div="" class="progress"
+                                                                    style="height: 8px; min-width: 75px">
+                                                                    <div class="progress-bar" role="progressbar"
+                                                                        style="width:{{ $bimbingan->skripsi->progres }}%;
+                                                                    @if ($bimbingan->skripsi->progres == 0) background-color: #8592a3;
+                                                                    @elseif($bimbingan->skripsi->progres >= 1 && $bimbingan->skripsi->progres <= 50)
+                                                                        background-color: #ffab00;
+                                                                    @elseif($bimbingan->skripsi->progres >= 51 && $bimbingan->skripsi->progres <= 99)
+                                                                        background-color: #007bff;
+                                                                    @else
+                                                                        background-color: #71dd37; @endif"
+                                                                        aria-valuenow="{{ $bimbingan->skripsi->progres }}"
+                                                                        aria-valuemin="0" aria-valuemax="100">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="text-body ms-3">
+                                                                    {{ $bimbingan->skripsi->progres }}%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="divider">
+                                                <div class="divider-text">
+                                                    <h5 class="mb-0"><strong>Bimbingan</strong></h5>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                @foreach ($riwayatmahasiswas[$bimbingan->mahasiswa->id]['riwayatBimbingans'] as $index => $riwayatBimbingan)
+                                                    <div class="mb-4">
+                                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                                            <h6 class="mb-0 ">
+                                                                <strong>{{ $riwayatBimbingan->nama }}</strong>
+                                                            </h6>
+                                                            <h6 id="tanggal-riwayat-{{ $index }}" class="mb-0">
+                                                            </h6>
+                                                        </div>
+                                                        <div class="card ms-md-4 p-3" style="background-color: {{ getStatusColor($riwayatBimbingan->status) }};">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <div>
+                                                                    @if ($riwayatBimbingan->subbab)
+                                                                        <h6 class="mb-0 text-white"><strong>Bab
+                                                                                {{ $riwayatBimbingan->subbab->nama }}</strong>
+                                                                        </h6>
+                                                                    @elseif ($riwayatBimbingan->bab)
+                                                                        <h6 class="mb-0 text-white">
+                                                                            <strong>{{ $riwayatBimbingan->bab->nama }}</strong>
+                                                                        </h6>
+                                                                    @endif
+                                                                </div>
+                                                                <div>
+                                                                    <h6 class="m-0 text-end text-white">
+                                                                        <strong>{{ ucwords($riwayatBimbingan->status) }}</strong>
+                                                                    </h6>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary"
+                                                data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body p-2"
@@ -115,16 +248,73 @@
 
 @section('scripts')
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var tanggalElement = document.getElementById("tanggal");
-        var tanggalText = tanggalElement.textContent.trim();
-        
-        // Ubah format tanggal
-        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        var tanggalBaru = new Date(tanggalText).toLocaleDateString('id-ID', options);
-        
-        // Setel teks baru pada elemen
-        tanggalElement.textContent = tanggalBaru;
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var tanggalElement = document.getElementById("tanggal");
+            var tanggalValue = tanggalElement.textContent;
+
+            if (tanggalValue) {
+                var formattedDate = formatDate(tanggalValue);
+                tanggalElement.textContent = formattedDate;
+            }
+        });
+
+        // Function to format date
+        function formatDate(dateString) {
+            var currentDate = new Date(dateString);
+            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                "September", "Oktober", "November", "Desember"
+            ];
+
+            var dayName = getDayName(currentDate.getDay());
+            var day = currentDate.getDate();
+            var month = monthNames[currentDate.getMonth()];
+            var year = currentDate.getFullYear();
+
+            return dayName + ", " + day + " " + month + " " + year;
+        }
+
+        // Function to get day name
+        function getDayName(dayIndex) {
+            var dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            return dayNames[dayIndex];
+        }
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the formatted date for each riwayatBimbingan
+            @foreach ($riwayatmahasiswas as $riwayatmahasiswa)
+                @foreach ($riwayatmahasiswa['riwayatBimbingans'] as $index => $riwayatBimbingan)
+                    var dateRiwayatBimbingan{{ $index }} = "{{ optional($riwayatBimbingan)->tanggal }}";
+                    if (dateRiwayatBimbingan{{ $index }}) {
+                        var formattedDateRiwayatBimbingan{{ $index }} = formatDate(
+                            dateRiwayatBimbingan{{ $index }});
+                        document.getElementById("tanggal-riwayat-{{ $index }}").textContent =
+                            formattedDateRiwayatBimbingan{{ $index }};
+                    }
+                @endforeach
+            @endforeach
+        });
+
+        // Function to format date
+        function formatDate(dateString) {
+            var currentDate = new Date(dateString);
+            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                "September", "Oktober", "November", "Desember"
+            ];
+
+            var dayName = getDayName(currentDate.getDay());
+            var day = currentDate.getDate();
+            var month = monthNames[currentDate.getMonth()];
+            var year = currentDate.getFullYear();
+
+            return dayName + ", " + day + " " + month + " " + year;
+        }
+
+        // Function to get day name
+        function getDayName(dayIndex) {
+            var dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            return dayNames[dayIndex];
+        }
+    </script>
 @endsection

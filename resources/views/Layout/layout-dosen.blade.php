@@ -53,7 +53,7 @@
                 <!-- Logo & Nama Web -->
                 <div class="app-brand demo">
                     {{-- Link jika logo di klik --}}
-                    <a href="index.html" class="app-brand-link">
+                    <a href="{{ route('landing-page') }}" class="app-brand-link">
                         {{-- Logo --}}
                         <span class="app-brand-logo demo">
 
@@ -77,7 +77,7 @@
                                     @if ($dosen->foto)
                                         <!-- Jika ada foto, tampilkan foto -->
                                         <img class="avatar-initial rounded-circle bg-label-dark"
-                                            src="{{ url('Foto Mahasiswa') . '/' . $dosen->foto }}" />
+                                            src="{{ url('Foto Dosen') . '/' . $dosen->foto }}" />
                                     @else
                                         <!-- Jika tidak ada foto, tampilkan inisial -->
                                         <span class="avatar-initial rounded-circle bg-label-dark">
@@ -94,15 +94,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item" href="{{ route('profil-dosen') }}">
                                 <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-cog me-2"></i>
-                                <span class="align-middle">Settings</span>
+                                <span class="align-middle">Profil Saya</span>
                             </a>
                         </li>
                         <li>
@@ -131,6 +125,10 @@
                         <a href="bimbingan-dosen" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-conversation"></i>
                             <div data-i18n="Basic">Bimbingan</div>
+                            @if ($notif > 0)
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-primary mx-2">{{ $notif }}</span> 
+                            @endif
+                            
                         </a>
                     </li>
                 </ul>

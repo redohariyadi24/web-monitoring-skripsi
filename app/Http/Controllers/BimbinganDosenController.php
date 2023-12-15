@@ -14,17 +14,42 @@ class BimbinganDosenController extends Controller
         $user = Auth::user();
         $dosen = $user->dosen;
 
+        // Ambil bimbingan yang sedang menunggu konfirmasi
         $bimbingans = Bimbingan::where('dospem_id', $dosen->id)
             ->where('status', 'menunggu konfirmasi')
             ->get();
+        // menghitung jumlah bimbingan yang sedang menunggu konfirmasi
+        $notif = $bimbingans->count();
+
+        // Inisialisasi array untuk menyimpan riwayat bimbingan mahasiswa
+        $riwayatmahasiswas = [];
+
+        // Loop melalui bimbingans untuk mengumpulkan riwayat bimbingan
+        foreach ($bimbingans as $bimbingan) {
+            $mahasiswa = $bimbingan->mahasiswa;
+
+            // Ambil semua bimbingan untuk mahasiswa dengan dosen ini
+            $riwayatBimbingans = Bimbingan::where('mahasiswa_id', $mahasiswa->id)
+                ->where('dospem_id', $dosen->id)
+                ->get();
+
+            // Tambahkan data ke array riwayatmahasiswas
+            $riwayatmahasiswas[$mahasiswa->id] = [
+                'mahasiswa' => $mahasiswa,
+                'riwayatBimbingans' => $riwayatBimbingans,
+            ];
+        }
 
         // Return view with data
         return view('dosen.bimbingan', [
             'user' => $user,
             'dosen' => $dosen,
             'bimbingans' => $bimbingans,
+            'riwayatmahasiswas' => $riwayatmahasiswas,
+            'notif' => $notif,
         ])->with('layout', 'layout.layout-dosen');
     }
+
 
     public function hasilBimbingan(Request $request)
     {
@@ -62,7 +87,7 @@ class BimbinganDosenController extends Controller
             $message = 'Bimbingan berhasil di ACC';
         } elseif ($hasil == 'revisi') {
             $message = 'Hasil Bimbingan adalah Revisi';
-        } 
+        }
 
         $bimbingan->status = $hasil;
         $bimbingan->save();
@@ -70,5 +95,4 @@ class BimbinganDosenController extends Controller
         // Pass the message to the view
         return redirect()->back()->with('message', $message);
     }
-
 }
