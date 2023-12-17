@@ -185,14 +185,50 @@
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            var progress = {{ $skripsi->progres }};
+            var color;
+
+            if (progress == 0) {
+                color = '#8592a3'; // Grey color for 0
+            } else if (progress >= 1 && progress <= 50) {
+                color = '#ffab00'; // Yellow color for 1-50
+            } else if (progress >= 51 && progress <= 99) {
+                color = '#007bff'; // Blue color for 51-99
+            } else if (progress == 100) {
+                color = '#71dd37'; // Green color for 100
+            }
+
             var options = {
                 chart: {
                     height: 400,
                     type: 'radialBar',
                 },
-                series: [{{ $skripsi->progres }}],
-                labels: ['Progress'],
-            }
+                series: [progress],
+                labels: ['Progres'],
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 15,
+                            size: '55%',
+                        },
+                        dataLabels: {
+                            showOn: 'always',
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: '#888',
+                                fontSize: '13px',
+                            },
+                            value: {
+                                color: color, // Set color based on progress value
+                                fontSize: '30px',
+                                show: true,
+                            },
+                        }
+                    }
+                },
+                colors: [color] // Set color for the entire chart
+            };
 
             var chart = new ApexCharts(document.querySelector("#chart1"), options);
 

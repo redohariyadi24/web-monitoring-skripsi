@@ -23,9 +23,19 @@ class UserController extends Controller
         $outputData = [];
 
         foreach ($result as $x => $y) {
+            $color = '#8592a3'; // Default color for 0
+            if ($x > 0 && $x <= 50) {
+                $color = '#ffab00'; // Yellow color for 1-50
+            } elseif ($x >= 51 && $x <= 99) {
+                $color = '#007bff'; // Blue color for 51-99
+            } elseif ($x == 100) {
+                $color = '#71dd37'; // Green color for 100
+            }
+
             $outputData[] = [
-                'x' => 'Progres ' . $x . '%', // Assuming you want categories labeled A, B, C, etc.
+                'x' => 'Progres ' . $x . '%',
                 'y' => $y,
+                'color' => $color, // Set color based on progress value
             ];
         }
 
@@ -93,14 +103,20 @@ class UserController extends Controller
             ->orWhereHas('dosen2', function ($query) use ($dosen) {
                 $query->where('id', $dosen->id);
             })
-            ->with(['mahasiswa', 'dosen1', 'dosen2'])
+            ->with(['mahasiswa', 'dosen1', 'dosen2', 'jadwal']) // Mengambil relasi jadwal
             ->get();
+
+        $mahasiswajumlah = $skripsis->count();
+        $skripsiSelesai = $skripsis->where('progres', 100)->count();
 
         // Mengembalikan view dengan data yang diperbarui
         return view('dosen.index', [
             'user' => $user,
             'dosen' => $dosen,
             'skripsis' => $skripsis,
+            'mahasiswajumlah' => $mahasiswajumlah,
+            'skripsiSelesai' => $skripsiSelesai,
+            // 'jadwals' => $jadwals,
             'notif' => $notif,
         ])->with('layout', 'layout.layout-dosen');
     }

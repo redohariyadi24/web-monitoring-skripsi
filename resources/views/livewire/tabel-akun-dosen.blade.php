@@ -1,7 +1,7 @@
 <div>
     <div class="card-header d-flex flex-column flex-md-row">
         <div class="head-label text">
-            <h4 class="card-title mb-0">Data Mahasiswa</h4>
+            <h4 class="card-title mb-0">Data Akun Dosen</h4>
         </div>
         <div class="d-flex ms-auto me-3">
             <div class="input-group">

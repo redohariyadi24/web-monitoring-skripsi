@@ -53,7 +53,7 @@
                 <!-- Logo & Nama Web -->
                 <div class="app-brand demo">
                     {{-- Link jika logo di klik --}}
-                    <a href="index.html" class="app-brand-link">
+                    <a href="{{ route('landing-page') }}" class="app-brand-link">
                         {{-- Logo --}}
                         <span class="app-brand-logo demo">
 
@@ -62,7 +62,7 @@
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">Web Skripsi</span>
                     </a>
 
-                    <a href="javascript:void(0);"
+                    <a href="{{ route('landing-page') }}"
                         class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>
@@ -86,21 +86,6 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">My Profile</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bx bx-cog me-2"></i>
-                                <span class="align-middle">Settings</span>
-                            </a>
-                        </li>
-                        <li>
-                            <div class="dropdown-divider"></div>
-                        </li>
                         <li>
                             <a class="dropdown-item" href="/logout">
                                 <i class="bx bx-power-off me-2"></i>

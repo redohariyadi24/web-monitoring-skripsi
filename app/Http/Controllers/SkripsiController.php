@@ -92,6 +92,6 @@ class SkripsiController extends Controller
     {
         $skripsi->delete();
 
-        return redirect()->route('progres-skripsi.index');
+        return redirect()->route('progres-skripsi.index')->with('success', 'Data Skripsi berhasil di hapus.');
     }
 }

@@ -2868,6 +2868,16 @@ fieldset:disabled .btn {
     color: rgba(67, 89, 113, 0.6);
 }
 
+.pointer-cursor {
+    cursor: pointer;
+    transition: color 0.3s; /* Efek transisi warna selama 0.3 detik */
+}
+
+.pointer-cursor:hover {
+    color: #696cff; /* Ganti warna saat dihover */
+}
+
+
 .btn-lg,
 .btn-group-lg > .btn {
     padding: 0.75rem 1.5rem;
@@ -4739,7 +4749,7 @@ fieldset:disabled .btn {
 }
 .modal-dialog-scrollable .modal-content {
     max-height: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .modal-dialog-scrollable .modal-body {
     overflow-y: auto;
@@ -5332,7 +5342,7 @@ fieldset:disabled .btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 14%;
+    width: 10%;
     padding: 0;
     color: #fff;
     text-align: center;

@@ -62,7 +62,7 @@
                         <span class="app-brand-text demo menu-text fw-bolder ms-2">Web Skripsi</span>
                     </a>
 
-                    <a href="javascript:void(0);"
+                    <a href="{{ route('landing-page') }}"
                         class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
                         <i class="bx bx-chevron-left bx-sm align-middle"></i>
                     </a>

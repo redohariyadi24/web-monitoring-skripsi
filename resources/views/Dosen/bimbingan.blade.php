@@ -151,14 +151,17 @@
                                             <div>
                                                 @foreach ($riwayatmahasiswas[$bimbingan->mahasiswa->id]['riwayatBimbingans'] as $index => $riwayatBimbingan)
                                                     <div class="mb-4">
-                                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <div
+                                                            class="d-flex justify-content-between align-items-center mb-2">
                                                             <h6 class="mb-0 ">
                                                                 <strong>{{ $riwayatBimbingan->nama }}</strong>
                                                             </h6>
-                                                            <h6 id="tanggal-riwayat-{{ $index }}" class="mb-0">
+                                                            <h6 class="mb-0">
+                                                                {{ \Carbon\Carbon::parse(optional($riwayatBimbingan)->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}
                                                             </h6>
                                                         </div>
-                                                        <div class="card ms-md-4 p-3" style="background-color: {{ getStatusColor($riwayatBimbingan->status) }};">
+                                                        <div class="card ms-md-4 p-3"
+                                                            style="background-color: {{ getStatusColor($riwayatBimbingan->status) }};">
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 <div>
                                                                     @if ($riwayatBimbingan->subbab)
@@ -198,7 +201,7 @@
                             <!-- Informasi Bimbingan yang statusnya masih 'menunggu konfirmasi' -->
                             <div class="card-header text-dark d-flex justify-content-between align-items-center pb-2 pt-2">
                                 <h5 class="mb-0"><strong>{{ $bimbingan->nama }}</strong></h5>
-                                <p class="mb-0 text-end" id="tanggal">{{ $bimbingan->tanggal }}</p>
+                                <p class="mb-0 text-end" id="tanggal-{{ $loop->index }}">{{ $bimbingan->tanggal }}</p>
                             </div>
                             <div class="card mx-3 mb-3">
                                 <div class="row p-3 d-flex justify-content-between align-items-center">
@@ -249,40 +252,42 @@
 @section('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var tanggalElement = document.getElementById("tanggal");
-            var tanggalValue = tanggalElement.textContent;
+            @foreach ($bimbingans as $index => $bimbingan)
+                var tanggalElement{{ $index }} = document.getElementById("tanggal-{{ $index }}");
+                var tanggalValue{{ $index }} = tanggalElement{{ $index }}.textContent;
 
-            if (tanggalValue) {
-                var formattedDate = formatDate(tanggalValue);
-                tanggalElement.textContent = formattedDate;
+                if (tanggalValue{{ $index }}) {
+                    var formattedDate{{ $index }} = formatDate(tanggalValue{{ $index }});
+                    tanggalElement{{ $index }}.textContent = formattedDate{{ $index }};
+                }
+            @endforeach
+
+            // Function to format date
+            function formatDate(dateString) {
+                var currentDate = new Date(dateString);
+                console.log("Input Date:", dateString);
+                var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
+                    "September", "Oktober", "November", "Desember"
+                ];
+
+                var dayName = getDayName(currentDate.getDay());
+                var day = currentDate.getDate();
+                var month = monthNames[currentDate.getMonth()];
+                var year = currentDate.getFullYear();
+
+                return dayName + ", " + day + " " + month + " " + year;
+            }
+
+            // Function to get day name
+            function getDayName(dayIndex) {
+                var dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+                return dayNames[dayIndex];
             }
         });
-
-        // Function to format date
-        function formatDate(dateString) {
-            var currentDate = new Date(dateString);
-            var monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus",
-                "September", "Oktober", "November", "Desember"
-            ];
-
-            var dayName = getDayName(currentDate.getDay());
-            var day = currentDate.getDate();
-            var month = monthNames[currentDate.getMonth()];
-            var year = currentDate.getFullYear();
-
-            return dayName + ", " + day + " " + month + " " + year;
-        }
-
-        // Function to get day name
-        function getDayName(dayIndex) {
-            var dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-            return dayNames[dayIndex];
-        }
     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Get the formatted date for each riwayatBimbingan
             @foreach ($riwayatmahasiswas as $riwayatmahasiswa)
                 @foreach ($riwayatmahasiswa['riwayatBimbingans'] as $index => $riwayatBimbingan)
                     var dateRiwayatBimbingan{{ $index }} = "{{ optional($riwayatBimbingan)->tanggal }}";

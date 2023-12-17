@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title', 'Landing Page')
+@section('title', 'Web Monitoring Skripsi')
 
 @section('main')
     <div class="row p-4">
@@ -37,12 +37,12 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-md-8 col-lg-6">
-                            <div id="boxchart">
-                            </div>
                             <div>
                                 <h5 class="text-center">
                                     <strong>Progres Skripsi Seluruh Mahasiswa Fakultas Teknik</strong>
                                 </h5>
+                            </div>
+                            <div id="boxchart">
                             </div>
                         </div>
                         <div class="col-12 col-md-4 col-lg-6">
@@ -68,18 +68,24 @@
                         horizontal: true
                     }
                 },
+                legend: {
+                    show: true,
+                    showForSingleSeries: true,
+                    customLegendItems: ['Belum Mengerjakan', 'Progres < 50%', 'Progres > 50%', 'Selesai'],
+                    markers: {
+                        fillColors: ['#8592a3', '#ffab00', '#007bff', '#71dd37']
+                    }
+                },
                 series: [{
-                    data: [
-
-                        @foreach ($result as $item)
-                            {
-                                x: '{{ $item['x'] }}',
-                                y: {{ $item['y'] }},
-                            },
-                        @endforeach
-
-                    ]
-                }]
+                    name: 'Mahasiswa',
+                    data: dataArray.map(item => ({
+                        x: item['x'],
+                        y: item['y'],
+                        fillColor: item['color']
+                    }))
+                }],
+                colors: dataArray.map(item => item['color']),
+                // Set colors for the entire chart
             }
 
             var chart = new ApexCharts(document.querySelector("#boxchart"), options);
