@@ -105,7 +105,6 @@ class UserController extends Controller
             })
             ->with(['mahasiswa', 'dosen1', 'dosen2', 'jadwal']) // Mengambil relasi jadwal
             ->get();
-
         $mahasiswajumlah = $skripsis->count();
         $skripsiSelesai = $skripsis->where('progres', 100)->count();
 
