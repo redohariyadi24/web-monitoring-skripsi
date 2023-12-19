@@ -12,7 +12,7 @@ class Jadwal extends Model
     protected $fillable = [
         'tanggal',
         'skripsi_id',
-        'keterangan',
+        'jenis',
     ];
 
     public function skripsi()

@@ -44,7 +44,6 @@
                     <th>Mahasiswa</th>
                     <th>Skripsi</th>
                     <th>Pembimbing</th>
-                    <th>Keterangan</th>
                     <th></th>
                 </tr>
             </thead>
@@ -56,9 +55,11 @@
                             <td>{{ $jadwals->firstItem() + $index }}</td>
                             <td
                                 class="{{ \Carbon\Carbon::parse($jadwal->tanggal)->isSameDay(now()) ? 'text-primary' : (\Carbon\Carbon::parse($jadwal->tanggal)->lt(now()) ? 'text-muted' : 'text-success') }}">
-                                <strong>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('Y-m-d') }}</strong>
+                                <strong class="mb-0" style="font-size: 1.1rem">{{ $jadwal->jenis }}</strong><br>
+                                <strong>{{ \Carbon\Carbon::parse($jadwal->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}</strong>
                                 <br>
-                                <span>{{ \Carbon\Carbon::parse($jadwal->tanggal)->format('H:i') }}</span>
+                                <span>Pukul
+                                    {{ \Carbon\Carbon::parse($jadwal->tanggal)->locale('id_ID')->isoFormat('H:mm') }}</span>
                             </td>
                             <td class="" style="">
                                 <div class="d-flex justify-content-start align-items-center user-name">
@@ -125,7 +126,6 @@
                                     @endif
                                 </ul>
                             </td>
-                            <td>{{ $jadwal->keterangan }}</td>
                             <td>
                                 <div class="dropdown">
                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

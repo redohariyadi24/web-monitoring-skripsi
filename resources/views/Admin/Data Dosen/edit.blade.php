@@ -3,11 +3,11 @@
 @section('title', 'Edit Data Dosen')
 
 @section('main')
-    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Data Mahasiswa/</span> Edit Data Mahasiswa</h4>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Data Dosen/</span> Edit Data Dosen</h4>
     <div class="col-xl mx-auto" style="max-width: 700px">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Form Edit Data Mahasiswa</h5>
+                <h5 class="mb-0">Form Edit Data Dosen</h5>
             </div>
             <div class="card-body">
                 <form method="post" action="{{ route('data-dosen.update', ['dosen' => $dosen]) }}"

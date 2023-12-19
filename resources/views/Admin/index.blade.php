@@ -11,7 +11,7 @@
                         <div class="card-body" style="height: max-content;">
                             <h5 class="card-title text-primary">Hallo Admin {{ $user->name }}</h5>
                             <p class="mb-1">
-                                Sebanyak <span class="fw-bold text-dark">{{--  {{ $presentaseSkripsiSelesai }} --}} 2%</span> Mahasiswa
+                                Sebanyak <span class="fw-bold text-dark">{{ number_format($presentaseSkripsiSelesai, 2) }}%</span> Mahasiswa
                                 sudah menyelesaikan Skripsi nya.
                             </p>
                         </div>

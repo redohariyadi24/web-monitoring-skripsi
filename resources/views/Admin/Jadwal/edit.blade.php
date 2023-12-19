@@ -12,7 +12,16 @@
                     @csrf
                     @method('put')
                     <div class="mb-3">
-                        <label for="exampleFormControlSelect1" class="form-label">Example select</label>
+                        <label class="form-label">Jenis</label>
+                        <select class="form-select" name="jenis" aria-label="Default select example">
+                            <option value="Seminar Hasil" {{ $jadwal->jenis === 'Seminar Hasil' ? 'selected' : '' }}>Seminar
+                                Hasil</option>
+                            <option value="Sidang Skripsi" {{ $jadwal->jenis === 'Sidang Skripsi' ? 'selected' : '' }}>
+                                Sidang Skripsi</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">Mahasiswa</label>
                         <select name="skripsi_id" class="form-select" id="exampleFormControlSelect1"
                             aria-label="Default select example">
                             <option selected disabled>-- Pilih Mahasiswa --</option>
@@ -35,10 +44,6 @@
                         <input name="tanggal" id="tanggal" class="form-control" type="datetime-local"
                             value="{{ $jadwal->tanggal }}" />
                         <p class="text-warning m-1" id="error-message" style="font-size: 0.9em"></p>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Keterangan</label>
-                        <textarea name="keterangan" class="form-control" rows="3">{{ $jadwal->keterangan }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Perbarui Data</button>
                 </form>

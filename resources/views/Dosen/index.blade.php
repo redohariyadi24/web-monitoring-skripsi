@@ -83,21 +83,43 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    {{-- @dd($skripsiDenganJadwal) --}}
                     @php
                         $jumlahJadwal = 0;
+                        $index = 0;
                     @endphp
 
-                    @foreach ($skripsis as $skripsi)
-                        @if ($skripsi->jadwal)
-                            @php
-                                $jadwalDate = \Carbon\Carbon::parse($skripsi->jadwal->tanggal);
-                                if ($jadwalDate->isPast()) {
-                                    // Jika tanggal sudah lewat, skip tampilkan
-                                    continue;
-                                }
+                    @foreach ($skripsiDenganJadwal as $skripsi)
+                        @php
+                            $firstJadwal = $skripsi->jadwal->first();
+                            if (!$firstJadwal) {
+                                // Jika tidak ada jadwal, skip tampilkan
+                                continue;
+                            }
+                            $jadwalDate = \Carbon\Carbon::parse($firstJadwal->tanggal);
+                            if ($jadwalDate->isPast()) {
+                                // Jika tanggal sudah lewat, set flag untuk melanjutkan iterasi
+                                $skipIteration = true;
+                            } else {
+                                $skipIteration = false;
                                 $jumlahJadwal++;
-                            @endphp
+                            }
+                        @endphp
+
+                        @if ($skipIteration)
+                            @continue
                         @endif
+
+                        <div class="carousel-item @if ($index === 0) active @endif">
+                            <div class="card bg-primary">
+                                <!-- Konten carousel -->
+                                <!-- ... (sama seperti kode sebelumnya) ... -->
+                            </div>
+                        </div>
+
+                        @php
+                            $index++;
+                        @endphp
                     @endforeach
 
                     @if ($jumlahJadwal > 1)
@@ -113,53 +135,51 @@
                                 @php
                                     $index = 0;
                                 @endphp
-                                @foreach ($skripsis as $skripsi)
-                                    @if ($skripsi->jadwal)
-                                        @php
-                                            $jadwalDate = \Carbon\Carbon::parse($skripsi->jadwal->tanggal);
-                                            if ($jadwalDate->isPast()) {
-                                                // Jika tanggal sudah lewat, skip tampilkan
-                                                continue;
-                                            }
-                                        @endphp
-                                        <div class="carousel-item @if ($index === 0) active @endif">
-                                            <div class="card bg-primary">
-                                                <div class="mb-4 mt-3">
-                                                    <div class="mx-md-3 mx-2 mb-auto px-4 text-white mb-0">
-                                                        <h5 class="mb-2 fw-bold text-white"> Sidang Skripsi
-                                                            {{ $index + 1 }}</h5>
-                                                        <div class="d-flex align-item-center justify-content">
-                                                            <i class="bx bx-xs bx-user me-2 mt-1 pb-1"></i>
-                                                            <p class="mb-0">
-                                                                {{ $skripsi->mahasiswa->nama }}
-                                                                ({{ $skripsi->mahasiswa->npm }})
-                                                            </p>
-                                                        </div>
-                                                        <div class="d-flex align-item-center justify-content">
-                                                            <i class="bx bx-xs bx-calendar me-2 mt-1 pb-1"></i>
-                                                            <p class="mb-0">
-                                                                {{ \Carbon\Carbon::parse($skripsi->jadwal->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="d-flex align-item-center justify-content">
-                                                            <i class="bx bx-xs bx-time me-2 mt-1 pb-1"></i>
-                                                            <p class="mb-0">
-                                                                Pukul
-                                                                {{ \Carbon\Carbon::parse($skripsi->jadwal->tanggal)->locale('id_ID')->isoFormat('H:mm') }}
-                                                            </p>
-                                                        </div>
-                                                        <div class="d-flex align-item-center justify-content">
-                                                            <i class="bx bx-xs bx-map me-2 mt-1 pb-1"></i>
-                                                            <p>{{ $skripsi->jadwal->keterangan }}</p>
-                                                        </div>
+                                @foreach ($skripsiDenganJadwal as $skripsi)
+                                    @php
+                                        $firstJadwal = $skripsi->jadwal->first();
+                                        if (!$firstJadwal) {
+                                            // Jika tidak ada jadwal, skip tampilkan
+                                            continue;
+                                        }
+                                        $jadwalDate = \Carbon\Carbon::parse($firstJadwal->tanggal);
+                                        if ($jadwalDate->isPast()) {
+                                            // Jika tanggal sudah lewat, skip tampilkan
+                                            continue;
+                                        }
+                                    @endphp
+                                    <div class="carousel-item @if ($index === 0) active @endif">
+                                        <div class="card bg-primary">
+                                            <div class="my-3">
+                                                <div class="mx-md-3 mx-2 my-auto px-4 text-white mb-0">
+                                                    <h5 class="mb-2 fw-bold text-white">{{ $firstJadwal->jenis }}</h5>
+                                                    <div class="d-flex align-item-center justify-content">
+                                                        <i class="bx bx-xs bx-user me-2 mt-1 pb-1"></i>
+                                                        <p class="mb-0">
+                                                            {{ $skripsi->mahasiswa->nama }}
+                                                            ({{ $skripsi->mahasiswa->npm }})
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex align-item-center justify-content">
+                                                        <i class="bx bx-xs bx-calendar me-2 mt-1 pb-1"></i>
+                                                        <p class="mb-0">
+                                                            {{ \Carbon\Carbon::parse($firstJadwal->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex align-item-center justify-content">
+                                                        <i class="bx bx-xs bx-time me-2 mt-1 pb-1"></i>
+                                                        <p class="mb-0">
+                                                            Pukul
+                                                            {{ \Carbon\Carbon::parse($firstJadwal->tanggal)->locale('id_ID')->isoFormat('H:mm') }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        @php
-                                            $index++;
-                                        @endphp
-                                    @endif
+                                    </div>
+                                    @php
+                                        $index++;
+                                    @endphp
                                 @endforeach
                             </div>
                             <a class="carousel-control-prev" href="#carouselExample" role="button" data-bs-slide="prev">
@@ -174,51 +194,64 @@
                         </div>
                     @elseif($jumlahJadwal == 1)
                         {{-- Tampilkan satu elemen untuk satu jadwal --}}
-                        @foreach ($skripsis as $skripsi)
-                            @if ($skripsi->jadwal)
-                                @php
-                                    $jadwalDate = \Carbon\Carbon::parse($skripsi->jadwal->tanggal);
-                                    if ($jadwalDate->isPast()) {
-                                        // Jika tanggal sudah lewat, skip tampilkan
-                                        continue;
-                                    }
-                                @endphp
-                                <div class="card bg-primary">
-                                    <div class="my-3">
-                                        <div class="mx-md-3 mx-2 my-auto px-4 text-white mb-0">
-                                            <h5 class="mb-2 fw-bold text-white"> Sidang Skripsi</h5>
-                                            <div class="d-flex align-item-center justify-content">
-                                                <i class="bx bx-xs bx-user me-2 mt-1 pb-1"></i>
-                                                <p class="mb-0">
-                                                    {{ $skripsi->mahasiswa->nama }}
-                                                    ({{ $skripsi->mahasiswa->npm }})
-                                                </p>
-                                            </div>
-                                            <div class="d-flex align-item-center justify-content">
-                                                <i class="bx bx-xs bx-calendar me-2 mt-1 pb-1"></i>
-                                                <p class="mb-0">
-                                                    {{ \Carbon\Carbon::parse($skripsi->jadwal->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}
-                                                </p>
-                                            </div>
-                                            <div class="d-flex align-item-center justify-content">
-                                                <i class="bx bx-xs bx-time me-2 mt-1 pb-1"></i>
-                                                <p class="mb-0">
-                                                    Pukul
-                                                    {{ \Carbon\Carbon::parse($skripsi->jadwal->tanggal)->locale('id_ID')->isoFormat('H:mm') }}
-                                                </p>
-                                            </div>
-                                            <div class="d-flex align-item-center justify-content">
-                                                <i class="bx bx-xs bx-map me-2 mt-1 pb-1"></i>
-                                                <p class="mb-0">{{ $skripsi->jadwal->keterangan }}</p>
-                                            </div>
+                        @php
+                            $index = 0;
+                        @endphp
+                        @foreach ($skripsiDenganJadwal as $skripsi)
+                            @php
+                                $firstJadwal = $skripsi->jadwal->first();
+                                if (!$firstJadwal) {
+                                    // Jika tidak ada jadwal, skip tampilkan
+                                    continue;
+                                }
+                                $jadwalDate = \Carbon\Carbon::parse($firstJadwal->tanggal);
+                                if ($jadwalDate->isPast()) {
+                                    // Jika tanggal sudah lewat, set flag untuk melanjutkan iterasi
+                                    $skipIteration = true;
+                                } else {
+                                    $skipIteration = false;
+                                }
+                            @endphp
+
+                            @if ($skipIteration)
+                                @continue
+                            @endif
+
+                            <div class="card bg-primary">
+                                <div class="my-3">
+                                    <div class="mx-md-3 mx-2 my-auto px-4 text-white mb-0">
+                                        <h5 class="mb-2 fw-bold text-white"> {{ $firstJadwal->jenis }}</h5>
+                                        <div class="d-flex align-item-center justify-content">
+                                            <i class="bx bx-xs bx-user me-2 mt-1 pb-1"></i>
+                                            <p class="mb-0">
+                                                {{ $skripsi->mahasiswa->nama }}
+                                                ({{ $skripsi->mahasiswa->npm }})
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-item-center justify-content">
+                                            <i class="bx bx-xs bx-calendar me-2 mt-1 pb-1"></i>
+                                            <p class="mb-0">
+                                                {{ \Carbon\Carbon::parse($firstJadwal->tanggal)->locale('id_ID')->isoFormat('dddd, D MMMM YYYY') }}
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-item-center justify-content">
+                                            <i class="bx bx-xs bx-time me-2 mt-1 pb-1"></i>
+                                            <p class="mb-0">
+                                                Pukul
+                                                {{ \Carbon\Carbon::parse($firstJadwal->tanggal)->locale('id_ID')->isoFormat('H:mm') }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
-                            @endif
+                            </div>
+
+                            @php
+                                $index++;
+                            @endphp
                         @endforeach
                     @else
                         <div class="card" style="background-color: var(--bs-gray);">
-                            <div class="mb-4 mt-3">
+                            <div class="mb-2 mt-2">
                                 <div class="mx-3 mb-auto">
                                     <p class="text-muted my-5 text-center">Belum Ada Pengumuman</p>
                                 </div>

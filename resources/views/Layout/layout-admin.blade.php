@@ -173,6 +173,19 @@
                         <a href="/jadwal-sidang" class="menu-link">
                             <i class="menu-icon tf-icons bx bx-calendar"></i>
                             <div data-i18n="User interface">Jadwal Sidang</div>
+                            @if ($jumlahSkripsiTanpaSeminarHasil > 0)
+                                <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-primary ms-2"
+                                    data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                    data-bs-html="true"
+                                    title="<span>Belum Seminar Hasil</span>">{{ $jumlahSkripsiTanpaSeminarHasil }}</span>
+                            @endif
+                            @if ($jumlahSkripsiTanpaSidangSkripsi > 0)
+                                <span
+                                    class="badge rounded-pill badge-center h-px-20 w-px-20 bg-primary ms-2"
+                                    data-bs-toggle="tooltip" data-bs-offset="0,4" data-bs-placement="top"
+                                    data-bs-html="true"
+                                    title="<span>Belum Sidang Skripsi</span>">{{ $jumlahSkripsiTanpaSidangSkripsi }}</span>
+                            @endif
                         </a>
                     </li>
                 </ul>

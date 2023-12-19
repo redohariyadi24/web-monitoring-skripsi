@@ -18,7 +18,7 @@ class JadwalSeeder extends Seeder
             [
                 'tanggal' => $specificDate,
                 'skripsi_id' => 1,
-                'keterangan' => 'Sidang Skripsi'
+                'jenis' => 'Sidang Skripsi',
             ],
         ];
         foreach ($Data as $key => $value) {

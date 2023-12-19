@@ -33,4 +33,5 @@ class Mahasiswa extends Model
         return $this->hasMany(Bimbingan::class, 'mahasiswa_id');
     }
 
+    
 }

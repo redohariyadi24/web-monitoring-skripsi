@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('subbabs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Bab::class)->constrained();
+            $table->foreignIdFor(Bab::class)->constrained()->cascadeOnDelete();
             $table->string('nama');
             $table->timestamps();
         });

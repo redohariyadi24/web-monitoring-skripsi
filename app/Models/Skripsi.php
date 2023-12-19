@@ -35,7 +35,7 @@ class Skripsi extends Model
 
     public function jadwal()
     {
-        return $this->hasOne(Jadwal::class);
+        return $this->hasMany(Jadwal::class);
     }
 
     public function bimbingans()

@@ -1,7 +1,12 @@
 <?php
 if (!function_exists('generateInitials')) {
-    function generateInitials($fullName)
+    function generateInitials($fullName, $maxChars = 2)
     {
+        // Validasi input
+        if (!is_string($fullName) || empty($fullName)) {
+            return '';
+        }
+
         $words = explode(' ', $fullName);
         $initials = '';
 
@@ -9,9 +14,13 @@ if (!function_exists('generateInitials')) {
             $initials .= strtoupper(substr($word, 0, 1));
         }
 
+        // Batasi inisial hingga maksimal $maxChars karakter
+        $initials = substr($initials, 0, $maxChars);
+
         return $initials;
     }
 }
+
 
 if (!function_exists('getStatusColor')) {
     function getStatusColor($status)

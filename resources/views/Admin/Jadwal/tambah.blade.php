@@ -13,34 +13,28 @@
                     @csrf
                     @method('post')
                     <div class="mb-3">
-                        <label for="exampleFormControlSelect1" class="form-label">Example select</label>
-                        <select name="skripsi_id" class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                            <option selected></option>
+                        <label class="form-label">Status</label>
+                        <select class="form-select" name="jenis" aria-label="Default select example">
+                            <option selected value="Seminar Hasil">Seminar Hasil</option>
+                            <option value="Sidang Skripsi">Sidang Skripsi</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">Mahasiswa</label>
+                        <select name="skripsi_id" class="form-select" id="exampleFormControlSelect1"
+                            aria-label="Default select example">
+                            <option selected>Pilih Mahasiswa</option>
                             @foreach ($mahasiswas as $mahasiswa)
-                                <option value="{{ $mahasiswa->npm }}">{{ $mahasiswa->npm }} - {{ $mahasiswa->nama }}</option>
+                                <option value="{{ $mahasiswa->npm }}">{{ $mahasiswa->npm }} - {{ $mahasiswa->nama }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
-                    {{-- <div class="mb-3">
-                        <label for="exampleDataList" class="form-label">NPM Mahasiswa</label>
-                        <input name="skripsi_id" class="form-control" list="datalistOptions" id="exampleDataList"
-                            placeholder="Cari NPM Mahasiswa ..." required />
-                        <datalist id="datalistOptions">
-                            @foreach ($mahasiswas as $mahasiswa)
-                                <option value="{{ $mahasiswa->npm }}">{{ $mahasiswa->nama }} | Progres Skripsi
-                                    {{ $mahasiswa->skripsi->progres }}%</option>
-                            @endforeach
-                        </datalist>
-                    </div> --}}
                     <div class="mb-3">
                         <label class="col-form-label">Jadwal Sidang</label>
                         <input name="tanggal" id="tanggal" class="form-control" type="datetime-local"
                             value="2021-06-18T12:30:00" />
                         <p class="text-warning m-1" id="error-message" style="font-size: 0.9em"></p>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Keterangan</label>
-                        <textarea name="keterangan" class="form-control" rows="3">Tempat: </textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>

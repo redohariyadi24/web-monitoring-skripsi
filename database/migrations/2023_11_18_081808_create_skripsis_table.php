@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('skripsis', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Mahasiswa::class)->constrained();
-            $table->foreignId('dosen1_id')->constrained('dosens');
-            $table->foreignId('dosen2_id')->constrained('dosens');
+            $table->foreignIdFor(Mahasiswa::class)->constrained()->cascadeOnDelete();
+            $table->foreignId('dosen1_id')->constrained('dosens')->cascadeOnDelete();
+            $table->foreignId('dosen2_id')->constrained('dosens')->cascadeOnDelete();
             $table->string('judul');
             $table->integer('progres');
             $table->timestamps();

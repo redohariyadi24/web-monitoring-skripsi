@@ -22,7 +22,7 @@ class DummyUsersSeeder extends Seeder
             ],
             [
                 'name' => 'Seprina Dwi Cahyani',
-                'username' => 'G1A021012',
+                'username' => 'G1A021010',
                 'role' => 'mahasiswa',
                 'password' => bcrypt('123456')
             ],

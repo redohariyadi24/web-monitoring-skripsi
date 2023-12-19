@@ -14,9 +14,9 @@ return new class extends Migration
     {
         Schema::create('jadwals', function (Blueprint $table) {
             $table->id();
+            $table->enum('jenis', ['Seminar Hasil', 'Sidang Skripsi']);
             $table->datetime('tanggal');
-            $table->foreignIdFor(Skripsi::class)->constrained();
-            $table->text('keterangan')->nullable();
+            $table->foreignIdFor(Skripsi::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

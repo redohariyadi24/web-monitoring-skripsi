@@ -16,11 +16,11 @@ return new class extends Migration
             $table->id();            
             $table->string('nama');
             $table->date('tanggal');
-            $table->foreignId('mahasiswa_id')->constrained('mahasiswas');
-            $table->foreignId('dospem_id')->constrained('dosens');
-            $table->foreignId('skripsi_id')->constrained('skripsis');
-            $table->foreignId('bab_id')->constrained('babs');
-            $table->foreignId('subbab_id')->nullable()->constrained('subbabs');
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->cascadeOnDelete();
+            $table->foreignId('dospem_id')->constrained('dosens')->cascadeOnDelete();
+            $table->foreignId('skripsi_id')->constrained('skripsis')->cascadeOnDelete();
+            $table->foreignId('bab_id')->constrained('babs')->cascadeOnDelete();
+            $table->foreignId('subbab_id')->nullable()->constrained('subbabs')->cascadeOnDelete();
             $table->enum('status', ['menunggu konfirmasi', 'acc', 'revisi'])->default('menunggu konfirmasi');
             $table->timestamps();
 

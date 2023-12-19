@@ -6,6 +6,7 @@ use App\Models\Jadwal;
 use App\Models\Mahasiswa;
 use App\Models\Skripsi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 class JadwalController extends Controller
 {
@@ -18,29 +19,57 @@ class JadwalController extends Controller
 
     public function tambah()
     {
-        // mencari skripsi yang progresnya 100
-        $skripsis = Skripsi::where('progres', 100)->with('mahasiswa')->get();
+        // Mencari skripsi yang progresnya 100
+        $skripsis = Skripsi::where('progres', 100)->with('jadwal', 'mahasiswa')->get();
 
-        // mencari data mahasiswanya
+        // Mencari data mahasiswanya
         $mahasiswas = $skripsis->pluck('mahasiswa')->unique();
 
-        // mencari id mahasiswa yang sudah ada di jadwal
-        $adaJadwal = Jadwal::pluck('skripsi_id')->toArray();
-
-        // Filter out Mahasiswas with existing schedules
-        $mahasiswas = $mahasiswas->reject(function ($mahasiswa) use ($adaJadwal) {
-            return in_array($mahasiswa->skripsi->id, $adaJadwal);
+        // Menghitung skripsi yang belum memiliki jadwal 'Seminar Hasil'
+        $skripsiTanpaSeminarHasil = $skripsis->filter(function ($skripsi) {
+            return $skripsi->jadwal->where('jenis', 'Seminar Hasil')->count() === 0;
         });
 
-        return view('admin.jadwal.tambah', compact('mahasiswas'));
+        // Menghitung skripsi yang belum memiliki jadwal 'Sidang Skripsi'
+        $skripsiTanpaSidangSkripsi = $skripsis->filter(function ($skripsi) {
+            // Mencari jadwal 'Seminar Hasil'
+            $jadwalSeminarHasil = $skripsi->jadwal->where('jenis', 'Seminar Hasil')->first();
+
+            // Memeriksa apakah skripsi memiliki jadwal 'Seminar Hasil'
+            if ($jadwalSeminarHasil) {
+                // Memeriksa apakah tanggal 'Seminar Hasil' sudah lewat
+                $tanggalSeminarHasilLewat = now()->gte($jadwalSeminarHasil->tanggal);
+
+                // Mengembalikan true jika tanggal 'Seminar Hasil' sudah lewat
+                return $tanggalSeminarHasilLewat;
+            }
+
+            // Mengembalikan false jika skripsi tidak memiliki jadwal 'Seminar Hasil'
+            return false;
+        });
+
+        // Jumlah skripsi tanpa jadwal Seminar Hasil
+        $jumlahSkripsiTanpaSeminarHasil = $skripsiTanpaSeminarHasil->count();
+
+        // Jumlah skripsi tanpa jadwal Sidang Skripsi
+        $jumlahSkripsiTanpaSidangSkripsi = $skripsiTanpaSidangSkripsi->count();
+
+        // Menggunakan View::share() untuk berbagi data ke layout
+        View::share([
+            'mahasiswas' => $mahasiswas,
+            'jumlahSkripsiTanpaSeminarHasil' => $jumlahSkripsiTanpaSeminarHasil,
+            'jumlahSkripsiTanpaSidangSkripsi' => $jumlahSkripsiTanpaSidangSkripsi,
+        ]);
+
+        return view('admin.jadwal.tambah')->with( 'layout.layout-admin');
     }
 
     public function simpan(Request $request)
     {
         $data = $request->validate([
+            'jenis' => 'required',
             'tanggal' => 'required|date',
             'skripsi_id' => 'required|string',
-            'keterangan' => 'nullable|string',
         ]);
 
         $npm = $data['skripsi_id'];
@@ -49,6 +78,7 @@ class JadwalController extends Controller
             $skripsi = Skripsi::where('mahasiswa_id', $mahasiswa->id)->first();
             if ($skripsi) {
                 $data['skripsi_id'] = $skripsi->id;
+                // dd($data);
                 $newJadwal = Jadwal::create($data);
                 return redirect(route('jadwal-sidang.index'))->with('success', 'Jadwal berhasil disimpan.');;
             } else {
@@ -79,9 +109,9 @@ class JadwalController extends Controller
     public function update(Request $request, Jadwal $jadwal)
     {
         $data = $request->validate([
+            'jenis' => 'required',
             'tanggal' => 'required|date',
             'skripsi_id' => 'required|string',
-            'keterangan' => 'nullable|string',
         ]);
 
         $npm = $data['skripsi_id'];
@@ -92,8 +122,7 @@ class JadwalController extends Controller
 
             if ($skripsi) {
                 $data['skripsi_id'] = $skripsi->id;
-
-                // Update jadwal
+                // dd($data);
                 $jadwal->update($data);
 
                 return redirect(route('jadwal-sidang.index'))->with('success', 'Jadwal berhasil diperbarui.');
