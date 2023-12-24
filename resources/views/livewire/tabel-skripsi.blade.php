@@ -8,29 +8,40 @@
                 </div>
             @endif
         </div>
-        <div class="d-flex flex-column flex-md-row align-items-center">
-            <div class="head-label text">
-                <h4 class="card-title mb-0">Data Progres Skripsi Mahasiswa</h4>
-            </div>
-            <div class="d-flex ms-auto me-3">
-                <div class="input-group">
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
-                        <input type="text" wire:model.live="search" class="form-control"
-                            placeholder="Cari Skripsi...">
-                    </div>
+        <div class="row">
+            {{-- <div class="d-flex flex-column flex-md-row align-items-center"> --}}
+            <div class="col-12 col-sm-5 col-lg-7 mb-4 mb-md-0 ">
+                <div class="head-label text">
+                    <h4 class="card-title mb-0">Data Progres Skripsi Mahasiswa</h4>
                 </div>
             </div>
-            <div class="dt-action-buttons text-end pt-3 pt-md-0">
-                <div class="dt-buttons">
-                    <button class="dt-button create-new btn btn-primary" tabindex="0"
-                        aria-controls="DataTables_Table_0" type="button"
-                        onclick="window.location.href='{{ route('progres-skripsi.tambah') }}' ">
-                        <span>
-                            <i class="bx bx-plus me-sm-1"></i>
-                            <span class="d-none d-sm-inline-block">Tambah Data</span>
-                        </span>
-                    </button>
+            <div class="col-12 col-sm-7 col-lg-5">
+                <div class="row">
+                    <div class="col-8 col-sm-6">
+                        <div class="">
+                            <div class="input-group">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="tf-icons bx bx-search"></i></span>
+                                    <input type="text" wire:model.live="search" class="form-control"
+                                        placeholder="Cari Skripsi...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 col-sm-6">
+                        <div class="dt-action-buttons text-end ">
+                            <div class="dt-buttons">
+                                <button class="dt-button create-new btn btn-primary" tabindex="0"
+                                    aria-controls="DataTables_Table_0" type="button"
+                                    onclick="window.location.href='{{ route('progres-skripsi.tambah') }}' ">
+                                    <span>
+                                        <i class="bx bx-plus me-sm-1"></i>
+                                        <span class="d-none d-sm-inline-block">Tambah Data</span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

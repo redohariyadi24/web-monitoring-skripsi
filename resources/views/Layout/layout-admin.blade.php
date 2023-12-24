@@ -56,10 +56,10 @@
                     <a href="{{ route('landing-page') }}" class="app-brand-link">
                         {{-- Logo --}}
                         <span class="app-brand-logo demo">
-
+                            <img src="{{ asset('assets/img/favicon/favicon.ico') }}" alt="">
                         </span>
                         {{-- Nama Web --}}
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Web Skripsi</span>
+                        <span class="app-brand-text demo menu-text fw-bold ms-2">Monitoring Skripsi</span>
                     </a>
 
                     <a href="{{ route('landing-page') }}"

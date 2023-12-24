@@ -44,17 +44,6 @@
                     <div class="card-title mb-0">
                         <h5 class="m-0 me-2">Progres Skripsi</h5>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn p-0" type="button" id="deliveryExceptions" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="bx bx-dots-vertical-rounded"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="deliveryExceptions">
-                            <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div id="chart1">
@@ -69,17 +58,6 @@
                         <div class="card-header d-flex align-items-center justify-content-between">
                             <div class="card-title mb-0">
                                 <h5 class="m-0 me-2">Bimbingan</h5>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn p-0" type="button" id="deliveryExceptions" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="deliveryExceptions">
-                                    <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                </div>
                             </div>
                         </div>
                         <div class="card-body">
@@ -129,17 +107,6 @@
                             <div class="card-title mb-0">
                                 <h5 class="m-0 me-2">Pengumuman</h5>
                             </div>
-                            <div class="dropdown">
-                                <button class="btn p-0" type="button" id="deliveryExceptions" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="deliveryExceptions">
-                                    <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                </div>
-                            </div>
                         </div>
                         <div class="card-body">
                             @php
@@ -154,7 +121,7 @@
                                             @foreach ($jadwals as $index => $jadwal)
                                                 <div class="carousel-item @if ($index === 0) active @endif">
                                                     <div class="card bg-success">
-                                                        <div class="mb-4 mt-3">
+                                                        <div class="mb-4 mt-3 mx-4">
                                                             <div class="mx-3 mb-auto text-white">
                                                                 <h5 class="text-white mb-2"><strong
                                                                         class="text-white">{{ $jadwal->jenis }}</strong>
@@ -296,6 +263,14 @@
             var chart = new ApexCharts(document.querySelector("#chart1"), options);
 
             chart.render();
+        });
+    </script>
+    <script>
+        // Cek apakah ada kesalahan, jika ada, buka kembali modal
+        $(document).ready(function() {
+            @if ($errors->any())
+                $('#modalCenter').modal('show');
+            @endif
         });
     </script>
     <script>

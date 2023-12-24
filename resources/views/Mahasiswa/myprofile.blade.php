@@ -50,9 +50,9 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <h3 class="mb-0" style="font-weight: lighter">{{ $mahasiswa->nama }}</h3>
+                        <h2 class="mb-0" style="font-weight: lighter">{{ $mahasiswa->nama }}</h2>
                         <p class=" mb-0 text-muted">{{ $mahasiswa->email }}</p>
-                        <div class="text-dark" style="font-weight: bold">
+                        <div class="" style="font-weight: bold">
                             <p class="mb-0 d-inline">{{ $mahasiswa->npm }}</p>
                             </h6>
                             <span class="mx-1">&#124;</span>

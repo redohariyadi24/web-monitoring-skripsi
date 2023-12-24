@@ -21,12 +21,21 @@ class AkunController extends Controller
     }
     public function simpanAdmin(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:admin',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'username' => 'required|unique:users',
+                'password' => 'required|min:8',
+                'role' => 'required|in:admin',
+            ],
+            [
+                'name.required' => 'Nama harus diisi.',
+                'username.required' => 'Username harus diisi.',
+                'username.unique' => 'Username sudah digunakan. Silakan pilih username lain.',
+                'password.required' => 'Password harus diisi.',
+                'password.min' => 'Password minimal harus :min karakter.',
+            ]
+        );
 
         $data['password'] = Hash::make($data['password']);
 
@@ -91,9 +100,16 @@ class AkunController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
-            'username' => 'required|unique:users',
+            'username' => 'required|size:18|unique:users',
             'password' => 'required|min:8',
             'role' => 'required|in:dosen',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'username.size' => 'Username Dosen harus memiliki 18 karakter.',
+            'username.required' => 'Username harus diisi.',
+            'username.unique' => 'Username sudah digunakan. Silakan pilih username lain.',
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal harus :min karakter.',
         ]);
 
         $data['password'] = Hash::make($data['password']);
@@ -157,12 +173,22 @@ class AkunController extends Controller
 
     public function simpanMahasiswa(Request $request)
     {
-        $data = $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:mahasiswa',
-        ]);
+        $data = $request->validate(
+            [
+                'name' => 'required',
+                'username' => 'required|size:9|unique:users',
+                'password' => 'required|min:8',
+                'role' => 'required',
+            ],
+            [
+                'name.required' => 'Nama harus diisi.',
+                'username.size' => 'Username Mahasiswa harus memiliki 9 karakter.',
+                'username.required' => 'Username harus diisi.',
+                'username.unique' => 'Username sudah digunakan. Silakan pilih username lain.',
+                'password.required' => 'Password harus diisi.',
+                'password.min' => 'Password minimal harus :min karakter.',
+            ]
+        );
 
         $data['password'] = Hash::make($data['password']);
 

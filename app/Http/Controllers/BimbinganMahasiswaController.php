@@ -43,6 +43,10 @@ class BimbinganMahasiswaController extends Controller
             'dospem_id' => 'required',
             'bab_id' => 'required',
             'subbab_id' => 'nullable',
+        ], [
+            'tanggal.required' => 'Tanggal harus diisi.',
+            'dospem_id.required' => 'Dosen pembimbing harus dipilih.',
+            'bab_id.required' => 'Bab harus dipilih.',
         ]);
 
         $skripsi = Skripsi::where('mahasiswa_id', $data['mahasiswa_id'])->first();

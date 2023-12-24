@@ -17,7 +17,7 @@ class RegistrasiController extends Controller
     public function registrasi()
     {
         return view('mahasiswa.registrasi.data-diri');
-    }
+    } 
 
     public function simpan(Request $request)
     {

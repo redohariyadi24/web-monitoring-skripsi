@@ -32,21 +32,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 col-md-6 mx-auto ">
             <div class="card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-8 col-lg-6">
-                            <div>
-                                <h5 class="text-center">
-                                    <strong>Progres Skripsi Seluruh Mahasiswa Fakultas Teknik</strong>
-                                </h5>
-                            </div>
-                            <div id="boxchart">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4 col-lg-6">
-                        </div>
+                <div class="card-body p-md-5">
+                    <div>
+                        <h5 class="text-center">
+                            <strong>Progres Skripsi Mahasiswa Fakultas Teknik</strong>
+                        </h5>
+                    </div>
+                    <div id="boxchart">
                     </div>
                 </div>
             </div>

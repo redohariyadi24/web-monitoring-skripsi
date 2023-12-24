@@ -56,10 +56,10 @@
                     <a href="{{ route('landing-page') }}" class="app-brand-link">
                         {{-- Logo --}}
                         <span class="app-brand-logo demo">
-
+                            <img src="{{ asset('assets/img/favicon/favicon.ico') }}" alt="">
                         </span>
                         {{-- Nama Web --}}
-                        <span class="app-brand-text demo menu-text fw-bolder ms-2">Web Skripsi</span>
+                        <span class="app-brand-text demo menu-text fw-bold ms-2">Monitoring Skripsi</span>
                     </a>
 
                     <a href="{{ route('landing-page') }}"
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <div class="flex-grow-1">
-                                <span class="fw-semibold d-block">{{ $user->name }}</span>
+                                <span class="fw-semibold d-block" style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">{{ $user->name }}</span>
                                 <small class="text-muted">{{ $mahasiswa->npm }}</small>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                         </a>
                     </div>
                     <div class="">
-                        <h4 class="mb-0"><strong>@yield('title', 'Default Title')</strong></h4>
+                        <h4 class="mb-0 text-secondary"><strong>@yield('title', 'Default Title')</strong></h4>
                     </div>
                 </nav>
                 <!-- / Navbar -->

@@ -81,7 +81,7 @@
                                         </div>
                                         <div
                                             class="col-6 col-sm-6 col-md-4 col-lg-4 col-xl-4 d-flex justify-content-between align-items-center">
-                                            <h6 class="m-0 me-4">{{ $bimbingan->dosen->nama }}</h6>
+                                            <h6 class="m-0 me-4" style="white-space: nowrap; overflow: hidden;text-overflow: ellipsis;">{{ $bimbingan->dosen->nama }}</h6>
                                             <h6 class="m-0" style="color: {{ getStatusColor($bimbingan->status) }}">
                                                 <strong>{{ ucwords($bimbingan->status) }}</strong>
                                             </h6>
